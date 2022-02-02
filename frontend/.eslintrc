@@ -70,12 +70,11 @@
     "plugin:react/recommended",
     "prettier"
   ],
-  // "eslint:recommended",
-  // "ecmaFeatures": {
-  //   "jsx": true,
-  //   "experimentalObjectRestSpread": true
-  // },
   "parserOptions": {
+    "babelOptions": {
+      "presets": ["@babel/preset-react"]
+    },
+    "requireConfigFile": false,
     "ecmaFeatures": {
       "jsx": true,
       "experimentalObjectRestSpread": true,

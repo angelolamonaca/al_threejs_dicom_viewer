@@ -1,3 +1,3 @@
-import viewport from './Viewport.js';
+import Viewport from './Viewport.js';
 
-export default viewport;
+export default Viewport;

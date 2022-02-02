@@ -1,1 +1,13 @@
-export { default as ImageLoader } from './ImageLoader';
+import { imageExtractor, imageLoader } from './image';
+
+const utils = {
+  imageLoader,
+  imageExtractor
+};
+
+export {
+  imageLoader,
+  imageExtractor
+};
+
+export default utils;
