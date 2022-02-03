@@ -5,15 +5,15 @@ export async function getImage(url) {
   const startCallTimeStamp = performance.now();
   axios
     .get(url)
-    .then(function (response) {
+    .then(function(response) {
       // handle success
       console.info(response);
     })
-    .catch(function (error) {
+    .catch(function(error) {
       // handle error
       console.error(error);
     })
-    .then(function () {
+    .then(function() {
       // always executed
       console.debug(
         `Call to load data ' ${url} took  ${

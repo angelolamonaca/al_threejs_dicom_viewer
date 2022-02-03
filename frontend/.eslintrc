@@ -72,7 +72,9 @@
   ],
   "parserOptions": {
     "babelOptions": {
-      "presets": ["@babel/preset-react"]
+      "presets": [
+        "@babel/preset-react"
+      ]
     },
     "requireConfigFile": false,
     "ecmaFeatures": {
