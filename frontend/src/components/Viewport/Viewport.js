@@ -1,8 +1,9 @@
 import React from 'react';
+import { getImage } from '../../services/imageService';
 
 class Viewport extends React.Component {
   render() {
-    console.log('Line 7 in Viewport.js');
+    getImage('http://localhost:9000/images/brain_images/3');
     return <h1>Works</h1>;
   }
 }
