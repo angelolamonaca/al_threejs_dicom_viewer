@@ -1,79 +1,38 @@
-import React, { useEffect, useRef, useState } from 'react';
-import getLocalJson from '../services/imageService';
-import { Frame } from '../models/Frame';
-import { JSONMRI } from '../models/JSONMRI';
+import * as THREE from 'three';
+import ReactDOM from 'react-dom';
+import React, { useRef, useState } from 'react';
+import { Canvas, useFrame } from '@react-three/fiber';
 
-let localJson: JSONMRI;
-let jsonMri: JSONMRI;
-let frame: Frame;
-
-const Viewport: React.FunctionComponent = () => {
-  const [frameState, setFrameState] = useState(160);
-  const canvasElement = useRef<HTMLCanvasElement>(null);
-
-  const refreshCanvas = async (): Promise<void> => {
-    if (!localJson) {
-      localJson = await getLocalJson('assets/images/T1C_Intensity.json');
-    }
-    if (!jsonMri) {
-      jsonMri = new JSONMRI(
-        localJson.size,
-        localJson.origin,
-        localJson.spacing,
-        localJson.direction,
-        localJson.data,
-      );
-    }
-    frame = jsonMri.getFrame(frameState);
-    if (canvasElement.current) {
-      canvasElement.current.width = 153;
-      canvasElement.current.height = 230;
-    }
-    const ctx = canvasElement.current?.getContext('2d');
-    const imageData = ctx?.createImageData(frame.width, frame.height);
-    const a = 0.5;
-    const b = 0.5;
-    for (let y = 0; y < frame.height; ++y) {
-      for (let x = 0; x < frame.width; ++x) {
-        if (imageData) {
-          // Red layer
-          imageData.data[(y * frame.width + x) * 4] =
-            frame.slice[y * frame.width + x] * a + b;
-          // Green layer
-          imageData.data[(y * frame.width + x) * 4 + 1] =
-            frame.slice[y * frame.width + x] * a + b;
-          // Blue layer
-          imageData.data[(y * frame.width + x) * 4 + 2] =
-            frame.slice[y * frame.width + x] * a + b;
-          // Unknown layer
-          imageData.data[(y * frame.width + x) * 4 + 3] = 255;
-        }
-      }
-    }
-    if (ctx && imageData) {
-      ctx.putImageData(imageData, 0, 0, 0, 0, frame.width, frame.height);
-    }
-
-    console.log(`Current frame: ${frame.depth - frameState} of ${frame.depth}`);
-  };
-
-  useEffect(() => {
-    refreshCanvas();
-  }, [frameState, refreshCanvas]);
-
-  const onWheel = (e: React.WheelEvent<HTMLCanvasElement>): void => {
-    if (e.deltaY < 0) {
-      // Scrolling Up
-      if (frameState <= 0) return;
-      setFrameState(frameState - 1);
-    } else if (e.deltaY > 0) {
-      // Scrolling down
-      if (frameState >= frame.depth) return;
-      setFrameState(frameState + 1);
-    }
-  };
-
-  return <canvas ref={canvasElement} onWheel={(e) => onWheel(e)} />;
+const Viewport = (props: JSX.IntrinsicElements['mesh']): any => {
+  const ref = useRef<THREE.Mesh>(null!);
+  const [hovered, hover] = useState(false);
+  const [clicked, click] = useState(false);
+  // eslint-disable-next-line no-return-assign
+  useFrame((state, delta) => (ref.current.rotation.x += 0.01));
+  return (
+    <mesh
+      /* eslint-disable-next-line react/jsx-props-no-spreading */
+      {...props}
+      ref={ref}
+      scale={clicked ? 1.5 : 1}
+      onClick={(event) => click(!clicked)}
+      onPointerOver={(event) => hover(true)}
+      onPointerOut={(event) => hover(false)}
+    >
+      <boxGeometry args={[1, 1, 1]} />
+      <meshStandardMaterial color={hovered ? 'hotpink' : 'orange'} />
+    </mesh>
+  );
 };
+
+ReactDOM.render(
+  <Canvas>
+    <ambientLight />
+    <pointLight position={[10, 10, 10]} />
+    <Viewport position={[-1.2, 0, 0]} />
+    <Viewport position={[1.2, 0, 0]} />
+  </Canvas>,
+  document.getElementById('root'),
+);
 
 export default Viewport;
