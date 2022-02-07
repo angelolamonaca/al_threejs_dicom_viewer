@@ -1,13 +1,9 @@
-import { imageDecoder, imageLoader } from './image';
+import { imageDecoder } from './image';
 
 const utils = {
-  imageLoader,
-  imageExtractor: imageDecoder
+  imageExtractor: imageDecoder,
 };
 
-export {
-  imageLoader,
-  imageDecoder
-};
+export { imageDecoder };
 
 export default utils;
