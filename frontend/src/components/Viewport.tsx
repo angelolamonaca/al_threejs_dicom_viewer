@@ -1,23 +1,45 @@
 import * as THREE from 'three';
-import ReactDOM from 'react-dom';
 import React, { useRef, useState } from 'react';
-import { Canvas, useFrame } from '@react-three/fiber';
+import { Canvas, ThreeEvent, useFrame } from '@react-three/fiber';
+import {
+  detectWheelDirection,
+  mouseWheelDirection,
+} from '../utils/mouse/mouseWheelEvent';
 
-const Viewport = (props: JSX.IntrinsicElements['mesh']): any => {
-  const ref = useRef<THREE.Mesh>(null!);
+const Box = (props: JSX.IntrinsicElements['mesh']): JSX.Element => {
+  // This reference will give us direct access to the THREE.Mesh object
+  const ref = useRef<THREE.Mesh>(null);
+
+  // Hold state for hovered and clicked events
   const [hovered, hover] = useState(false);
   const [clicked, click] = useState(false);
-  // eslint-disable-next-line no-return-assign
-  useFrame((state, delta) => (ref.current.rotation.x += 0.01));
+
+  // Rotate mesh every frame, this is outside of React without overhead
+  useFrame(() => {
+    if (ref.current) ref.current.rotation.x += 0.01;
+  });
+
   return (
     <mesh
-      /* eslint-disable-next-line react/jsx-props-no-spreading */
       {...props}
       ref={ref}
       scale={clicked ? 1.5 : 1}
-      onClick={(event) => click(!clicked)}
-      onPointerOver={(event) => hover(true)}
-      onPointerOut={(event) => hover(false)}
+      onClick={() => click(!clicked)}
+      onPointerOver={() => hover(true)}
+      onPointerOut={() => hover(false)}
+      onWheel={(event: ThreeEvent<WheelEvent> | WheelEvent) => {
+        const scrollDirection = detectWheelDirection(event);
+        switch (scrollDirection) {
+          case mouseWheelDirection.UP:
+            console.log('Scrolling UP');
+            break;
+          case mouseWheelDirection.DOWN:
+            console.log('Scrolling DOWN');
+            break;
+          default:
+            console.log('No Scrolling');
+        }
+      }}
     >
       <boxGeometry args={[1, 1, 1]} />
       <meshStandardMaterial color={hovered ? 'hotpink' : 'orange'} />
@@ -25,14 +47,14 @@ const Viewport = (props: JSX.IntrinsicElements['mesh']): any => {
   );
 };
 
-ReactDOM.render(
+// eslint-disable-next-line @typescript-eslint/explicit-function-return-type
+const Viewport = () => (
   <Canvas>
     <ambientLight />
     <pointLight position={[10, 10, 10]} />
-    <Viewport position={[-1.2, 0, 0]} />
-    <Viewport position={[1.2, 0, 0]} />
-  </Canvas>,
-  document.getElementById('root'),
+    <Box position={[-1.2, 0, 0]} />
+    <Box position={[1.2, 0, 0]} />
+  </Canvas>
 );
 
 export default Viewport;
