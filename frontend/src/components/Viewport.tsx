@@ -1,6 +1,6 @@
 import * as THREE from 'three';
 import React, { useRef, useState } from 'react';
-import { Canvas, ThreeEvent, useFrame } from '@react-three/fiber';
+import { Canvas, ThreeEvent } from '@react-three/fiber';
 import {
   detectWheelDirection,
   mouseWheelDirection,
@@ -13,11 +13,20 @@ const Box = (props: JSX.IntrinsicElements['mesh']): JSX.Element => {
   // Hold state for hovered and clicked events
   const [hovered, hover] = useState(false);
   const [clicked, click] = useState(false);
+  const [imgId, setImgId] = useState('008');
 
   // Rotate mesh every frame, this is outside of React without overhead
-  useFrame(() => {
+  /* useFrame(() => {
     if (ref.current) ref.current.rotation.x += 0.01;
-  });
+  }); */
+
+  const texture = new THREE.TextureLoader().load(
+    `http://localhost:8000/img/${imgId}`,
+  );
+
+  const zeroPad = (num: number, places: number): string =>
+    String(num)
+      .padStart(places, '0');
 
   return (
     <mesh
@@ -32,6 +41,8 @@ const Box = (props: JSX.IntrinsicElements['mesh']): JSX.Element => {
         switch (scrollDirection) {
           case mouseWheelDirection.UP:
             console.log('Scrolling UP');
+            console.log(zeroPad(5, 2)); // "05"
+            setImgId(zeroPad(parseInt(imgId, 10) + 1, 3));
             break;
           case mouseWheelDirection.DOWN:
             console.log('Scrolling DOWN');
@@ -41,19 +52,17 @@ const Box = (props: JSX.IntrinsicElements['mesh']): JSX.Element => {
         }
       }}
     >
-      <boxGeometry args={[1, 1, 1]} />
-      <meshStandardMaterial color={hovered ? 'hotpink' : 'orange'} />
+      <boxGeometry args={[4, 4, 4]} />
+      <meshBasicMaterial map={texture} />
     </mesh>
   );
 };
 
-// eslint-disable-next-line @typescript-eslint/explicit-function-return-type
-const Viewport = () => (
-  <Canvas>
+const Viewport = (): JSX.Element => (
+  <Canvas style={{ height: window.innerHeight }}>
     <ambientLight />
     <pointLight position={[10, 10, 10]} />
-    <Box position={[-1.2, 0, 0]} />
-    <Box position={[1.2, 0, 0]} />
+    <Box position={[0, 0, 0]} />
   </Canvas>
 );
 

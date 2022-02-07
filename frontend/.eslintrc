@@ -62,6 +62,7 @@
         "code": 80
       }
     ],
+    "implicit-arrow-linebreak": "off",
     "no-console": "off",
     "react/jsx-props-no-spreading": "off",
     "react-hooks/rules-of-hooks": "error",
