@@ -3,8 +3,8 @@ from PIL import Image
 from pydicom import dcmread
 
 
-def convert_dicom_to_rgb(img_id):
-    ds = dcmread(f'assets/dcm/case1_{img_id}.dcm')
+def convert_dicom_to_rgb(case_id, img_id):
+    ds = dcmread(f'assets/dcm/{case_id}/{case_id}_{img_id}.dcm')
     img = ds.pixel_array
     # Convert pixel_array (img) to -> gray image (img_2d_scaled)
     # Step 1. Convert to float to avoid overflow or underflow losses.

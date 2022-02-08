@@ -1,4 +1,5 @@
 import * as THREE from 'three';
+import { Vector3 } from 'three';
 import React, { useRef, useState } from 'react';
 import { Canvas, ThreeEvent } from '@react-three/fiber';
 import {
@@ -6,7 +7,57 @@ import {
   mouseWheelDirection,
 } from '../utils/mouse/mouseWheelEvent';
 
-const Box = (props: JSX.IntrinsicElements['mesh']): JSX.Element => {
+type Object3d = {
+  size: [number, number, number];
+};
+
+const zeroPad = (num: number, places: number): string =>
+  String(num).padStart(places, '0');
+
+const Cube = ({
+  position,
+  size,
+}: {
+  position: Vector3;
+  size: Vector3;
+}): JSX.Element => {
+  const [imgId, setImgId] = useState('000');
+  const geometry = new THREE.BoxGeometry(size.x, size.y, size.z);
+  const texture = new THREE.TextureLoader().load(
+    `http://localhost:8000/case4d/${imgId}`,
+  );
+  const material = new THREE.MeshBasicMaterial({ map: texture });
+  const mesh = new THREE.Mesh(geometry, material);
+  const scene = new THREE.Scene();
+  scene.add(mesh);
+  return (
+    <primitive
+      position={position}
+      object={scene}
+      onWheel={(event: ThreeEvent<WheelEvent> | WheelEvent) => {
+        const scrollDirection = detectWheelDirection(event);
+        switch (scrollDirection) {
+          case mouseWheelDirection.UP:
+            setImgId(zeroPad(parseInt(imgId, 10) + 1, 3));
+            break;
+          case mouseWheelDirection.DOWN:
+            setImgId(zeroPad(parseInt(imgId, 10) - 1, 3));
+            break;
+          default:
+            console.log('No Scrolling');
+        }
+      }}
+    />
+  );
+};
+
+const Box = ({
+  position,
+  size,
+}: {
+  position: Vector3;
+  size: Vector3;
+}): JSX.Element => {
   // This reference will give us direct access to the THREE.Mesh object
   const ref = useRef<THREE.Mesh>(null);
 
@@ -21,17 +72,13 @@ const Box = (props: JSX.IntrinsicElements['mesh']): JSX.Element => {
   }); */
 
   const texture = new THREE.TextureLoader().load(
-    `http://localhost:8000/img/${imgId}`,
+    `http://localhost:8000/case1/${imgId}`,
   );
-
-  const zeroPad = (num: number, places: number): string =>
-    String(num)
-      .padStart(places, '0');
 
   return (
     <mesh
-      {...props}
       ref={ref}
+      position={position}
       scale={clicked ? 1.5 : 1}
       onClick={() => click(!clicked)}
       onPointerOver={() => hover(true)}
@@ -40,19 +87,18 @@ const Box = (props: JSX.IntrinsicElements['mesh']): JSX.Element => {
         const scrollDirection = detectWheelDirection(event);
         switch (scrollDirection) {
           case mouseWheelDirection.UP:
-            console.log('Scrolling UP');
-            console.log(zeroPad(5, 2)); // "05"
-            setImgId(zeroPad(parseInt(imgId, 10) + 1, 3));
+            setImgId(zeroPad(parseInt(imgId, 10) + 2, 3));
             break;
           case mouseWheelDirection.DOWN:
-            console.log('Scrolling DOWN');
+            setImgId(zeroPad(parseInt(imgId, 10) - 2, 3));
             break;
           default:
             console.log('No Scrolling');
         }
       }}
     >
-      <boxGeometry args={[4, 4, 4]} />
+      {/* eslint-disable-next-line react/destructuring-assignment */}
+      <boxGeometry args={[size.x, size.y, size.z]} />
       <meshBasicMaterial map={texture} />
     </mesh>
   );
@@ -62,7 +108,8 @@ const Viewport = (): JSX.Element => (
   <Canvas style={{ height: window.innerHeight }}>
     <ambientLight />
     <pointLight position={[10, 10, 10]} />
-    <Box position={[0, 0, 0]} />
+    <Box position={new Vector3(-3, 0, 0)} size={new Vector3(4, 4, 0.1)} />
+    <Cube position={new Vector3(3, 0, 0)} size={new Vector3(4, 4, 0.1)} />
   </Canvas>
 );
 
