@@ -1,9 +1,13 @@
-import { imageDecoder } from './image';
+import image from './image';
+import math from './math';
+import mouse from './mouse';
 
 const utils = {
-  imageExtractor: imageDecoder,
+  image,
+  math,
+  mouse,
 };
 
-export { imageDecoder };
+export { image, math, mouse };
 
 export default utils;

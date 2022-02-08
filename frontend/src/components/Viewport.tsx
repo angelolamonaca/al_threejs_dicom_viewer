@@ -2,17 +2,8 @@ import * as THREE from 'three';
 import { Vector3 } from 'three';
 import React, { useRef, useState } from 'react';
 import { Canvas, ThreeEvent } from '@react-three/fiber';
-import {
-  detectWheelDirection,
-  mouseWheelDirection,
-} from '../utils/mouse/mouseWheelEvent';
-
-type Object3d = {
-  size: [number, number, number];
-};
-
-const zeroPad = (num: number, places: number): string =>
-  String(num).padStart(places, '0');
+import { detectWheelDirection, mouseWheelDirection } from '../utils/mouse';
+import { zeroPad } from '../utils/math';
 
 const Cube = ({
   position,
@@ -22,14 +13,16 @@ const Cube = ({
   size: Vector3;
 }): JSX.Element => {
   const [imgId, setImgId] = useState('000');
+
+  const scene = new THREE.Scene();
   const geometry = new THREE.BoxGeometry(size.x, size.y, size.z);
   const texture = new THREE.TextureLoader().load(
     `http://localhost:8000/case4d/${imgId}`,
   );
   const material = new THREE.MeshBasicMaterial({ map: texture });
   const mesh = new THREE.Mesh(geometry, material);
-  const scene = new THREE.Scene();
   scene.add(mesh);
+
   return (
     <primitive
       position={position}

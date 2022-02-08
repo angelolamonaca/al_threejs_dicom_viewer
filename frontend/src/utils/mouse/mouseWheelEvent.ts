@@ -15,3 +15,8 @@ export const detectWheelDirection = (
   // Scrolling down
   return mouseWheelDirection.DOWN;
 };
+
+export default {
+  mouseWheelDirection,
+  detectWheelDirection,
+};
