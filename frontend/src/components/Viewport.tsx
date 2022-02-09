@@ -17,7 +17,7 @@ const Cube = ({
   const scene = new THREE.Scene();
   const geometry = new THREE.BoxGeometry(size.x, size.y, size.z);
   const texture = new THREE.TextureLoader().load(
-    `http://localhost:8000/case4d/${imgId}`,
+    `http://localhost:8000/case4d/${imgId}?output_type=png`,
   );
   const material = new THREE.MeshBasicMaterial({ map: texture });
   const mesh = new THREE.Mesh(geometry, material);
@@ -65,7 +65,7 @@ const Box = ({
   }); */
 
   const texture = new THREE.TextureLoader().load(
-    `http://localhost:8000/case1/${imgId}`,
+    `http://localhost:8000/case1/${imgId}?output_type=png`,
   );
 
   return (
