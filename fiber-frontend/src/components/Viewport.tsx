@@ -1,9 +1,17 @@
 import * as THREE from 'three';
 import { Vector3 } from 'three';
 import React, { useRef, useState } from 'react';
-import { Canvas, ThreeEvent } from '@react-three/fiber';
+import { Canvas, ThreeEvent, useThree } from '@react-three/fiber';
 import { detectWheelDirection, mouseWheelDirection } from '../utils/mouse';
 import { zeroPad } from '../utils/math';
+
+const Camera = ({ position }: { position: Vector3 }): JSX.Element => {
+  const scene = new THREE.Scene();
+  const { camera } = useThree();
+  camera.position.set(position.x, position.y, position.z);
+  scene.add(camera);
+  return <primitive position={scene} object={camera} />;
+};
 
 const Cube = ({
   position,
@@ -98,7 +106,8 @@ const Box = ({
 };
 
 const Viewport = (): JSX.Element => (
-  <Canvas style={{ height: window.innerHeight }}>
+  <Canvas>
+    <Camera position={new Vector3(5, 5, 5)} />
     <ambientLight />
     <pointLight position={[10, 10, 10]} />
     <Box position={new Vector3(-3, 0, 0)} size={new Vector3(4, 4, 0.1)} />
