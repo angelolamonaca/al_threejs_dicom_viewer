@@ -106,7 +106,11 @@ const Box = ({
 };
 
 const Viewport = (): JSX.Element => (
-  <Canvas>
+  <Canvas style={{
+    height: '70vh',
+    backgroundColor: '#abccff',
+  }}
+  >
     <Camera position={new Vector3(5, 5, 5)} />
     <ambientLight />
     <pointLight position={[10, 10, 10]} />
