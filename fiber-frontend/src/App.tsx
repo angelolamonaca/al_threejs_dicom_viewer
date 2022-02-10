@@ -1,11 +1,11 @@
 import React, { FC } from 'react';
-import Viewport from './components/Viewport';
+import MainCanvas from './components/MainCanvas';
 import MainAppBar from './components/AppBar';
 
 const App: FC = () => (
   <div className="App">
     <MainAppBar />
-    <Viewport />
+    <MainCanvas />
   </div>
 );
 
