@@ -1,9 +1,10 @@
 import * as THREE from 'three';
 import { PerspectiveCamera, Vector3 } from 'three';
-import React, { useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { Canvas, ThreeEvent, useThree } from '@react-three/fiber';
 import { detectWheelDirection, mouseWheelDirection } from '../utils/mouse';
 import { zeroPad } from '../utils/math';
+import { getImageFromDicomConverterApi } from '../services/imageService';
 
 const Camera = ({ position }: { position: Vector3 }): JSX.Element => {
   const scene = new THREE.Scene();
@@ -27,13 +28,27 @@ const Cube = ({
   size: Vector3;
 }): JSX.Element => {
   const [imgId, setImgId] = useState('000');
+  const [pixelArray, setPixelArray] = useState(new ArrayBuffer(0));
+  const imgIdRef = useRef(imgId);
+  const pixelArrayRef = useRef(pixelArray);
+
+  useEffect(() => {
+    pixelArrayRef.current = pixelArray;
+  });
+
+  useEffect(() => {
+    if (imgIdRef.current !== imgId) {
+      getImageFromDicomConverterApi('000').then((res) => {
+        setPixelArray(res);
+      });
+    }
+  }, [imgId]);
 
   const scene = new THREE.Scene();
   const geometry = new THREE.BoxGeometry(size.x, size.y, size.z);
-  const texture = new THREE.TextureLoader().load(
-    `http://localhost:8000/case4d/${imgId}?output_type=png`,
-  );
-  const material = new THREE.MeshBasicMaterial({ map: texture });
+  const texture2d = new THREE.DataTexture2DArray(pixelArray, 255, 255, 255);
+
+  const material = new THREE.MeshBasicMaterial({ map: texture2d });
   const mesh = new THREE.Mesh(geometry, material);
   scene.add(mesh);
 
