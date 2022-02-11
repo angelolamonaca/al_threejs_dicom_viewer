@@ -28,7 +28,7 @@ const Cube = ({
   size: Vector3;
 }): JSX.Element => {
   const [imgId, setImgId] = useState('000');
-  const [pixelArray, setPixelArray] = useState(new ArrayBuffer(0));
+  const [pixelArray, setPixelArray] = useState([[]]);
   const imgIdRef = useRef(imgId);
   const pixelArrayRef = useRef(pixelArray);
 
@@ -46,8 +46,19 @@ const Cube = ({
 
   const scene = new THREE.Scene();
   const geometry = new THREE.BoxGeometry(size.x, size.y, size.z);
-  const texture2d = new THREE.DataTexture2DArray(pixelArray, 255, 255, 255);
+  const temp = new Uint8Array(4 * 255 * 255);
+  for (let i = 0; i < pixelArray.length; i++) {
+    for (let j = 0; j < pixelArray.length; j++) {
+      const stride = (i * 255 + j) * 4;
 
+      temp[stride] = pixelArray[i][j];
+      temp[stride + 1] = pixelArray[i][j];
+      temp[stride + 2] = pixelArray[i][j];
+      temp[stride + 3] = 255;
+    }
+  }
+  const texture2d = new THREE.DataTexture(temp, 255, 255, THREE.RGBAFormat);
+  texture2d.needsUpdate = true;
   const material = new THREE.MeshBasicMaterial({ map: texture2d });
   const mesh = new THREE.Mesh(geometry, material);
   scene.add(mesh);
