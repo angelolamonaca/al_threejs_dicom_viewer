@@ -14,11 +14,15 @@ import { zeroPad } from '../utils/math';
 import { getImageFromDicomConverterApi } from '../services/imageService';
 import { JsonDcm } from '../models/JsonDcm';
 
+// eslint-disable-next-line import/no-mutable-exports
+export let perspectiveCamera: THREE.PerspectiveCamera;
+
 const Camera = ({ position }: { position: Vector3 }): JSX.Element => {
   const scene = new THREE.Scene();
   const { camera, gl } = useThree();
-  const perspectiveCamera: PerspectiveCamera = camera as PerspectiveCamera;
-  const canvas = document.getElementsByTagName('canvas')[0];
+  perspectiveCamera = camera as PerspectiveCamera;
+  const divCanvas = document.getElementById('divCanvas');
+  const canvas = divCanvas?.children[0] as HTMLCanvasElement;
   perspectiveCamera.aspect = canvas.width / canvas.height;
   perspectiveCamera.updateProjectionMatrix();
   gl.setSize(canvas.width, canvas.height);
@@ -91,7 +95,7 @@ const Cube = ({
 
 const MainCanvas = (): JSX.Element => (
   <Canvas
-    id="oo"
+    id="divCanvas"
     style={{
       height: '70vh',
       minWidth: '200px',

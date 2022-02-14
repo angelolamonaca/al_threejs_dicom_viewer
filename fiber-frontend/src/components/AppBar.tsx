@@ -17,6 +17,7 @@ import MenuIcon from '@mui/icons-material/Menu';
 import ZoomInIcon from '@mui/icons-material/ZoomIn';
 import ZoomOutIcon from '@mui/icons-material/ZoomOut';
 import MoreIcon from '@mui/icons-material/MoreVert';
+import { perspectiveCamera } from './MainCanvas';
 
 const MainAppBar = (): JSX.Element => {
   const [anchorEl, setAnchorEl] = React.useState(null);
@@ -65,6 +66,14 @@ const MainAppBar = (): JSX.Element => {
   );
 
   const mobileMenuId = 'primary-search-account-menu-mobile';
+
+  const zoomIn = (): void => {
+    perspectiveCamera.position.z -= 0.5;
+  };
+  const zoomOut = (): void => {
+    perspectiveCamera.position.z += 0.5;
+  };
+
   const renderMobileMenu = (
     <Menu
       anchorEl={mobileMoreAnchorEl}
@@ -82,12 +91,22 @@ const MainAppBar = (): JSX.Element => {
       onClose={handleMobileMenuClose}
     >
       <MenuItem>
-        <IconButton size="large" aria-label="Zoom In" color="inherit">
+        <IconButton
+          size="large"
+          aria-label="Zoom In"
+          color="inherit"
+          onClick={zoomIn}
+        >
           <ZoomInIcon />
         </IconButton>
       </MenuItem>
       <MenuItem>
-        <IconButton size="large" aria-label="Zoom Out" color="inherit">
+        <IconButton
+          size="large"
+          aria-label="Zoom Out"
+          color="inherit"
+          onClick={zoomOut}
+        >
           <ZoomOutIcon />
         </IconButton>
       </MenuItem>
@@ -129,10 +148,20 @@ const MainAppBar = (): JSX.Element => {
               },
             }}
           >
-            <IconButton size="large" aria-label="Zoom In" color="inherit">
+            <IconButton
+              size="large"
+              aria-label="Zoom In"
+              color="inherit"
+              onClick={zoomIn}
+            >
               <ZoomInIcon />
             </IconButton>
-            <IconButton size="large" aria-label="Zoom Out" color="inherit">
+            <IconButton
+              size="large"
+              aria-label="Zoom Out"
+              color="inherit"
+              onClick={zoomOut}
+            >
               <ZoomOutIcon />
             </IconButton>
           </Box>
