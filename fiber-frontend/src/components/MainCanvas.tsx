@@ -30,41 +30,35 @@ const Cube = ({
 }): JSX.Element => {
   const [imgId, setImgId] = useState('000');
   const imgIdRef = useRef(imgId);
-
   const [jsonDcm, setJsonDcm] = useState(new JsonDcm([[]]));
 
   useEffect(() => {
-    if (imgIdRef.current !== imgId) {
-      getImageFromDicomConverterApi(imgId)
-        .then((res) => {
-          setJsonDcm(new JsonDcm(res.pixelData));
-        })
-        .catch((e) => {
-          console.log('Line 40 in MainCanvas.tsx', e);
-        });
-    }
+    getImageFromDicomConverterApi(imgId, true)
+      .then((res) => {
+        setJsonDcm(new JsonDcm(res.pixelData, res.metadata));
+      })
+      .catch((e) => {
+        console.log(
+          'No available pixel data or metadata, server side error',
+          e,
+        );
+      });
+  }, []);
+
+  useEffect(() => {
+    getImageFromDicomConverterApi(imgId, false)
+      .then((res) => {
+        setJsonDcm(new JsonDcm(res.pixelData));
+      })
+      .catch((e) => {
+        console.log('No available pixel data, server side error', e);
+      });
   }, [imgId]);
 
   const scene = new THREE.Scene();
   const geometry = new THREE.BoxGeometry(size.x, size.y, size.z);
-  const textureData = new Uint8Array(4 * 255 * 255);
-  for (let i = 0; i < jsonDcm.pixelData.length; i++) {
-    for (let j = 0; j < jsonDcm.pixelData.length; j++) {
-      const stride = (i * 255 + j) * 4;
-      textureData[stride] = jsonDcm.pixelData[i][j];
-      textureData[stride + 1] = jsonDcm.pixelData[i][j];
-      textureData[stride + 2] = jsonDcm.pixelData[i][j];
-      textureData[stride + 3] = 255;
-    }
-  }
-  const texture2d = new THREE.DataTexture(
-    textureData,
-    255,
-    255,
-    THREE.RGBAFormat,
-  );
-  texture2d.needsUpdate = true;
-  const material = new THREE.MeshBasicMaterial({ map: texture2d });
+  const dataTexture = jsonDcm.getPixelDataAsThreeDataTexture();
+  const material = new THREE.MeshBasicMaterial({ map: dataTexture });
   const mesh = new THREE.Mesh(geometry, material);
   scene.add(mesh);
 
@@ -91,6 +85,7 @@ const Cube = ({
 
 const MainCanvas = (): JSX.Element => (
   <Canvas
+    id="oo"
     style={{
       height: '70vh',
       minWidth: '200px',
