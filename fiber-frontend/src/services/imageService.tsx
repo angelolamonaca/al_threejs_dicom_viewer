@@ -20,10 +20,9 @@ export const getImageFromDicomConverterApi = async (
   imgId: string,
   withMetadata: boolean,
 ): Promise<JsonDcm> => {
-  const response = await axios.get(
-    `${LOCALHOST}:8000/case4d/${imgId}
-    ?output_type=json
-    &with_metadata=${withMetadata}`,
-  );
+  const url = new URL(`${LOCALHOST}:8000/case4d/${imgId}`);
+  url.searchParams.append('output_type', 'json');
+  url.searchParams.append('with_metadata', String(withMetadata));
+  const response = await axios.get(url.href);
   return response.data;
 };
