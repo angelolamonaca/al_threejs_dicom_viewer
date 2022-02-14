@@ -5,6 +5,7 @@ import { Canvas, ThreeEvent, useThree } from '@react-three/fiber';
 import { detectWheelDirection, mouseWheelDirection } from '../utils/mouse';
 import { zeroPad } from '../utils/math';
 import { getImageFromDicomConverterApi } from '../services/imageService';
+import { JsonDcm } from '../models/JsonDcm';
 
 const Camera = ({ position }: { position: Vector3 }): JSX.Element => {
   const scene = new THREE.Scene();
@@ -28,36 +29,40 @@ const Cube = ({
   size: Vector3;
 }): JSX.Element => {
   const [imgId, setImgId] = useState('000');
-  const [pixelArray, setPixelArray] = useState([[]]);
   const imgIdRef = useRef(imgId);
-  const pixelArrayRef = useRef(pixelArray);
 
-  useEffect(() => {
-    pixelArrayRef.current = pixelArray;
-  });
+  const [jsonDcm, setJsonDcm] = useState(new JsonDcm([[]]));
 
   useEffect(() => {
     if (imgIdRef.current !== imgId) {
-      getImageFromDicomConverterApi('000').then((res) => {
-        setPixelArray(res);
-      });
+      getImageFromDicomConverterApi(imgId)
+        .then((res) => {
+          setJsonDcm(new JsonDcm(res.pixelData));
+        })
+        .catch((e) => {
+          console.log('Line 40 in MainCanvas.tsx', e);
+        });
     }
   }, [imgId]);
 
   const scene = new THREE.Scene();
   const geometry = new THREE.BoxGeometry(size.x, size.y, size.z);
-  const temp = new Uint8Array(4 * 255 * 255);
-  for (let i = 0; i < pixelArray.length; i++) {
-    for (let j = 0; j < pixelArray.length; j++) {
+  const textureData = new Uint8Array(4 * 255 * 255);
+  for (let i = 0; i < jsonDcm.pixelData.length; i++) {
+    for (let j = 0; j < jsonDcm.pixelData.length; j++) {
       const stride = (i * 255 + j) * 4;
-
-      temp[stride] = pixelArray[i][j];
-      temp[stride + 1] = pixelArray[i][j];
-      temp[stride + 2] = pixelArray[i][j];
-      temp[stride + 3] = 255;
+      textureData[stride] = jsonDcm.pixelData[i][j];
+      textureData[stride + 1] = jsonDcm.pixelData[i][j];
+      textureData[stride + 2] = jsonDcm.pixelData[i][j];
+      textureData[stride + 3] = 255;
     }
   }
-  const texture2d = new THREE.DataTexture(temp, 255, 255, THREE.RGBAFormat);
+  const texture2d = new THREE.DataTexture(
+    textureData,
+    255,
+    255,
+    THREE.RGBAFormat,
+  );
   texture2d.needsUpdate = true;
   const material = new THREE.MeshBasicMaterial({ map: texture2d });
   const mesh = new THREE.Mesh(geometry, material);

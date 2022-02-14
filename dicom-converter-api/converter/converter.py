@@ -4,7 +4,7 @@ from numpy import ndarray
 from pydicom import dcmread, FileDataset
 
 
-def convert_dicom(case_id, img_id, output_type="json"):
+def convert_dicom(case_id, img_id, output_type="json", with_metadata=False):
     # https://pydicom.github.io/pydicom/stable/tutorials/dataset_basics.html
 
     # Extract dataset from dcm file
@@ -25,7 +25,12 @@ def convert_dicom(case_id, img_id, output_type="json"):
 
     if output_type == "json":
         # Convert array to list
-        return pixel_data_uint8_scaled.tolist()
+        output_json = {
+            "pixelData": pixel_data_uint8_scaled.tolist()
+        }
+        if with_metadata:
+            output_json["metadata"] = ds.to_json_dict()
+        return output_json
 
     # Convert array to RGB Image
     output_img: Image = Image.fromarray(pixel_data_uint8_scaled).convert("RGB")

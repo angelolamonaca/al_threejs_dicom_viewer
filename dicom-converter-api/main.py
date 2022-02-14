@@ -24,8 +24,8 @@ app.add_middleware(
 
 
 @app.get("/{case_id}/{img_id}")
-async def get_image(case_id, img_id, output_type="json"):
-    converted_dicom = convert_dicom(case_id, img_id, output_type)
+async def get_image(case_id, img_id, output_type="json", with_metadata=False):
+    converted_dicom = convert_dicom(case_id, img_id, output_type, with_metadata)
     if output_type == "json":
         return JSONResponse(content=converted_dicom)
     else:

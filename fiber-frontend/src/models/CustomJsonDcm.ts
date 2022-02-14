@@ -1,10 +1,9 @@
 import { Frame } from './Frame';
 import fromBase64ToFloat64Array from '../utils/image/imageDecoder';
-import { JSONMRIDecoded } from './JSONMRIDecoded';
 import { Vector3 } from './Vector3';
 import { Matrix3 } from './Matrix3';
 
-export class JSONMRI {
+export class CustomJsonDcm {
   size: Vector3;
 
   origin: Vector3;
@@ -13,14 +12,14 @@ export class JSONMRI {
 
   direction: Matrix3;
 
-  data: string;
+  data: any;
 
   constructor(
     size: Vector3,
     origin: Vector3,
     spacing: Vector3,
     direction: Matrix3,
-    data: string,
+    data: any,
   ) {
     this.size = size;
     this.origin = origin;
@@ -29,7 +28,14 @@ export class JSONMRI {
     this.data = data;
   }
 
-  getFrame(z: number): Frame {
+  getFrame(z: number): Frame | undefined {
+    if (typeof this.data === 'string' || this.data instanceof String) {
+      throw new Error(
+        // eslint-disable-next-line max-len
+        "You are trying to convert from Base64 to Float64Array but 'data' variable is not a string! Maybe is already an Array?",
+      );
+    }
+
     const frame = new Frame(
       this.size[0],
       this.size[1],
@@ -39,7 +45,7 @@ export class JSONMRI {
 
     const decodedData: Float64Array = fromBase64ToFloat64Array(this.data);
 
-    const jsonMriDecoded: JSONMRIDecoded = new JSONMRIDecoded(
+    const jsonDcm: CustomJsonDcm = new CustomJsonDcm(
       this.size,
       this.origin,
       this.spacing,
@@ -50,7 +56,7 @@ export class JSONMRI {
     for (let y = 0; y < frame.height; y++) {
       for (let x = 0; x < frame.width; x++) {
         frame.slice[y * frame.width + x] =
-          jsonMriDecoded.data[(z * frame.height + y) * frame.width + x];
+          jsonDcm.data[(z * frame.height + y) * frame.width + x];
       }
     }
 

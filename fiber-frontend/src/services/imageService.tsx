@@ -1,16 +1,17 @@
-import axios from 'axios';
-import { JSONMRI } from '../models/JSONMRI';
+import axios, { AxiosResponse } from 'axios';
+import { CustomJsonDcm } from '../models/CustomJsonDcm';
+import { JsonDcm } from '../models/JsonDcm';
 
 const LOCALHOST = 'http://localhost';
 
-export const getLocalJson = async (url: string): Promise<JSONMRI> => {
+export const getLocalJson = async (url: string): Promise<CustomJsonDcm> => {
   const response = await axios.get(url);
   return response.data;
 };
 
 export const getImageFromDicomConverterApi = async (
   imgId: string,
-): Promise<any> => {
+): Promise<JsonDcm> => {
   const response = await axios.get(
     `${LOCALHOST}:8000/case4d/${imgId}?output_type=json`,
   );
