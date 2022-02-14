@@ -6,13 +6,14 @@
  */
 
 import * as THREE from 'three';
+import { PixelData } from './PixelData';
 
 export class JsonDcm {
-  pixelData: [[]];
+  pixelData: PixelData;
 
   metadata?: JSON;
 
-  constructor(pixelData: [[]], metadata?: JSON) {
+  constructor(pixelData: PixelData, metadata?: JSON) {
     this.pixelData = pixelData;
     if (metadata) {
       this.metadata = metadata;
