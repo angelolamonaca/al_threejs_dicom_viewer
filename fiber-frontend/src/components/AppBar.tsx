@@ -17,7 +17,7 @@ import MenuIcon from '@mui/icons-material/Menu';
 import ZoomInIcon from '@mui/icons-material/ZoomIn';
 import ZoomOutIcon from '@mui/icons-material/ZoomOut';
 import MoreIcon from '@mui/icons-material/MoreVert';
-import { perspectiveCamera } from './MainCanvas';
+import { perspectiveCamera } from './MainViewport/Camera';
 
 const MainAppBar = (): JSX.Element => {
   const [anchorEl, setAnchorEl] = React.useState(null);

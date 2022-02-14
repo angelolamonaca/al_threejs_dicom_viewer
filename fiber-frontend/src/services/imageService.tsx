@@ -6,21 +6,16 @@
  */
 
 import axios from 'axios';
-import { CustomJsonDcm } from '../models/CustomJsonDcm';
 import { JsonDcm } from '../models/JsonDcm';
 
 const LOCALHOST = 'http://localhost';
-
-export const getLocalJson = async (url: string): Promise<CustomJsonDcm> => {
-  const response = await axios.get(url);
-  return response.data;
-};
+const PORT = '8000';
 
 export const getImageFromDicomConverterApi = async (
   imgId: string,
   withMetadata: boolean,
 ): Promise<JsonDcm> => {
-  const url = new URL(`${LOCALHOST}:8000/case4d/${imgId}`);
+  const url = new URL(`${LOCALHOST}:${PORT}/case4d/${imgId}`);
   url.searchParams.append('output_type', 'json');
   url.searchParams.append('with_metadata', String(withMetadata));
   const response = await axios.get(url.href);
