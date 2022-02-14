@@ -29,7 +29,6 @@ const Cube = ({
   size: Vector3;
 }): JSX.Element => {
   const [imgId, setImgId] = useState('000');
-  const imgIdRef = useRef(imgId);
   const [jsonDcm, setJsonDcm] = useState(new JsonDcm([[]]));
 
   useEffect(() => {

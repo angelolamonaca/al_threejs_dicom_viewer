@@ -13,18 +13,20 @@ export class JsonDcm {
   }
 
   getPixelDataAsThreeDataTexture(): THREE.DataTexture {
-    const textureData = new Uint8Array(4 * 255 * 255);
-    for (let i = 0; i < this.pixelData.length; i++) {
-      for (let j = 0; j < this.pixelData.length; j++) {
-        const stride = (i * 255 + j) * 4;
-        textureData[stride] = this.pixelData[i][j];
-        textureData[stride + 1] = this.pixelData[i][j];
-        textureData[stride + 2] = this.pixelData[i][j];
-        textureData[stride + 3] = 255;
+    const rgbaPixelData = new Uint8Array(
+      4 * this.pixelData.length * this.pixelData.length,
+    );
+    for (let x = 0; x < this.pixelData.length; x++) {
+      for (let y = 0; y < this.pixelData.length; y++) {
+        const stride = (x * 255 + y) * 4;
+        rgbaPixelData[stride] = this.pixelData[x][y];
+        rgbaPixelData[stride + 1] = this.pixelData[x][y];
+        rgbaPixelData[stride + 2] = this.pixelData[x][y];
+        rgbaPixelData[stride + 3] = 255;
       }
     }
     const dataTexture = new THREE.DataTexture(
-      textureData,
+      rgbaPixelData,
       255,
       255,
       THREE.RGBAFormat,
