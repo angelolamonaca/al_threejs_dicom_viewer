@@ -22,7 +22,7 @@ const Panel = ({
   size: Vector3;
 }): JSX.Element => {
   const [imgId, setImgId] = useState('000');
-  const [jsonDcm, setJsonDcm] = useState(new JsonDcm([[]]));
+  const [jsonDcm, setJsonDcm] = useState(new JsonDcm());
 
   useEffect(() => {
     getImageFromDicomConverterApi(imgId, true)
@@ -49,7 +49,11 @@ const Panel = ({
 
   const scene = new THREE.Scene();
   const geometry = new THREE.BoxGeometry(size.x, size.y, size.z);
-  const dataTexture = jsonDcm.getPixelDataAsThreeDataTexture();
+  let dataTexture = new THREE.DataTexture();
+  if (jsonDcm.pixelData) {
+    dataTexture = PixelData.toTexture(jsonDcm.pixelData);
+  }
+
   const material = new THREE.MeshBasicMaterial({ map: dataTexture });
   const mesh = new THREE.Mesh(geometry, material);
   scene.add(mesh);
