@@ -1,6 +1,13 @@
+/**
+ * @created 14/02/2022/02/2022 - 12:12
+ * @project al_threejs_dicom_viewer
+ * @author Angelo Lamonaca - https://github.com/angelolamonaca
+ * @date 14/02/2022
+ */
+
 import * as THREE from 'three';
 import { PerspectiveCamera, Vector3 } from 'three';
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Canvas, ThreeEvent, useThree } from '@react-three/fiber';
 import { detectWheelDirection, mouseWheelDirection } from '../utils/mouse';
 import { zeroPad } from '../utils/math';

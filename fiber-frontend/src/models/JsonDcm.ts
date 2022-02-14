@@ -1,3 +1,10 @@
+/**
+ * @created 14/02/2022/02/2022 - 12:12
+ * @project al_threejs_dicom_viewer
+ * @author Angelo Lamonaca - https://github.com/angelolamonaca
+ * @date 14/02/2022
+ */
+
 import * as THREE from 'three';
 
 export class JsonDcm {
@@ -17,7 +24,7 @@ export class JsonDcm {
       4 * this.pixelData.length * this.pixelData.length,
     );
     let i = 0;
-    for (let x = 0; x < this.pixelData.length; x++) {
+    for (let x = this.pixelData.length - 1; x >= 0; x--) {
       for (let y = 0; y < this.pixelData.length; y++) {
         rgbaPixelData[i++] = this.pixelData[x][y];
         rgbaPixelData[i++] = this.pixelData[x][y];
