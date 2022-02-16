@@ -20,6 +20,7 @@ import ConstructionIcon from '@mui/icons-material/Construction';
 import ZoomInIcon from '@mui/icons-material/ZoomIn';
 import ContrastIcon from '@mui/icons-material/Contrast';
 
+import { Link } from 'react-router-dom';
 import { perspectiveCamera } from './ThreeObjects/Camera/Camera';
 
 const MainAppBar = (): JSX.Element => {
@@ -94,14 +95,16 @@ const MainAppBar = (): JSX.Element => {
       onClose={handleMobileMenuClose}
     >
       <MenuItem>
-        <IconButton
-          size="large"
-          aria-label="Zoom In"
-          color="inherit"
-          onClick={zoomIn}
-        >
-          <ZoomInIcon />
-        </IconButton>
+        <Link to="/zoomtool">
+          <IconButton
+            size="large"
+            aria-label="Zoom In"
+            color="inherit"
+            onClick={zoomIn}
+          >
+            <ZoomInIcon />
+          </IconButton>
+        </Link>
       </MenuItem>
       <MenuItem>
         <IconButton
@@ -156,14 +159,16 @@ const MainAppBar = (): JSX.Element => {
               },
             }}
           >
-            <IconButton
-              size="large"
-              aria-label="Zoom In"
-              color="inherit"
-              onClick={zoomIn}
-            >
-              <ZoomInIcon />
-            </IconButton>
+            <Link to="/zoomtool">
+              <IconButton
+                size="large"
+                aria-label="Zoom In"
+                color="inherit"
+                onClick={zoomIn}
+              >
+                <ZoomInIcon />
+              </IconButton>
+            </Link>
             <IconButton
               size="large"
               aria-label="Increase Contrast"
