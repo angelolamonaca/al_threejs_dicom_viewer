@@ -20,7 +20,7 @@ import ConstructionIcon from '@mui/icons-material/Construction';
 import ZoomInIcon from '@mui/icons-material/ZoomIn';
 import ContrastIcon from '@mui/icons-material/Contrast';
 
-import { perspectiveCamera } from './Canvas/Camera';
+import { perspectiveCamera } from './ThreeObjects/Camera/Camera';
 
 const MainAppBar = (): JSX.Element => {
   const [anchorEl, setAnchorEl] = React.useState(null);
@@ -117,7 +117,12 @@ const MainAppBar = (): JSX.Element => {
   );
 
   return (
-    <Box sx={{ flexGrow: 1 }}>
+    <Box
+      sx={{
+        flexGrow: 1,
+        height: '10vh',
+      }}
+    >
       <AppBar position="static">
         <Toolbar>
           <IconButton

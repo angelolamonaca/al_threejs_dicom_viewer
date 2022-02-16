@@ -8,14 +8,15 @@
 import { Vector3 } from 'three';
 import React from 'react';
 import { Canvas as FiberCanvas } from '@react-three/fiber';
-import Camera from './Camera';
-import Panel from './Panel';
+import Camera from './ThreeObjects/Camera/Camera';
+import Panel from './ThreeObjects/Panel/Panel';
 
-const Canvas = (): JSX.Element => (
+const Canvas = (props: any): JSX.Element => (
   <FiberCanvas
+    {...props}
     id="divCanvas"
     style={{
-      height: '70vh',
+      height: 'calc(70vh - 16px)',
       minWidth: '200px',
       backgroundColor: '#abccff',
     }}

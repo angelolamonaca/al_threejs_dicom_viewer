@@ -6,15 +6,17 @@
  */
 
 import React, { FC } from 'react';
-import Canvas from './components/Canvas/Canvas';
+import Canvas from './components/Canvas';
 import MainAppBar from './components/AppBar';
-import BottomToolBar from './components/BottomToolBar/BottomToolBar';
+import ToolBox from './components/ToolBox';
+import BottomNavigationBar from './components/BottomNavigationBar';
 
 const App: FC = () => (
   <div className="App">
     <MainAppBar />
     <Canvas />
-    <BottomToolBar />
+    <ToolBox />
+    <BottomNavigationBar />
   </div>
 );
 

@@ -2,10 +2,10 @@ import * as THREE from 'three';
 import { Vector3 } from 'three';
 import React, { useEffect, useState } from 'react';
 import { ThreeEvent } from '@react-three/fiber';
-import { JsonDcm } from '../../models/JsonDcm';
-import { getImageFromDicomConverterApi } from '../../services/imageService';
+import { JsonDcm } from '../../../models/JsonDcm';
+import { getImageFromDicomConverterApi } from '../../../services/imageService';
 import { panelScrollHandler } from './PanelEvents';
-import { PixelData } from '../../models/PixelData';
+import { PixelData } from '../../../models/PixelData';
 
 /**
  * @created 14/02/2022/02/2022 - 17:01

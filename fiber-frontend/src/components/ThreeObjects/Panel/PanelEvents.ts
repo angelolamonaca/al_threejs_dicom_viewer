@@ -1,6 +1,9 @@
 import { ThreeEvent } from '@react-three/fiber';
-import { detectWheelDirection, mouseWheelDirection } from '../../utils/mouse';
-import { zeroPad } from '../../utils/math';
+import {
+  detectWheelDirection,
+  mouseWheelDirection,
+} from '../../../utils/mouse';
+import { zeroPad } from '../../../utils/math';
 
 /**
  * @created 14/02/2022/02/2022 - 17:06

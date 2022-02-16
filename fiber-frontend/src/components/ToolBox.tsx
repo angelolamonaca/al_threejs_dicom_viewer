@@ -15,13 +15,13 @@ import Slider from '@mui/material/Slider';
 import MuiInput from '@mui/material/Input';
 import ZoomInIcon from '@mui/icons-material/ZoomIn';
 import ZoomOutIcon from '@mui/icons-material/ZoomOut';
-import { perspectiveCamera } from '../Canvas/Camera';
+import { perspectiveCamera } from './ThreeObjects/Camera/Camera';
 
 const Input = styled(MuiInput)`
   width: 42px;
 `;
 
-const InputSlider = (): JSX.Element => {
+const ToolBox = (): JSX.Element => {
   const [value, setValue] = React.useState<
     number | string | Array<number | string>
   >(1);
@@ -57,9 +57,9 @@ const InputSlider = (): JSX.Element => {
 
   return (
     <Box
-      // calc ( (100vh - canvas height - AppBar height - html margin)
+      // calc ( (100vh - canvas height - AppBar height - padding - html margin)
       sx={{
-        height: 'calc(100vh - 70vh - 64px - 16px - 16px)',
+        height: '10vh',
         minWidth: '200px',
         backgroundColor: '#e3e3e3',
         paddingX: '10vw',
@@ -71,7 +71,6 @@ const InputSlider = (): JSX.Element => {
         sx={{
           textAlign: 'center',
         }}
-        gutterBottom
       >
         Zoom
       </Typography>
@@ -120,4 +119,4 @@ const InputSlider = (): JSX.Element => {
   );
 };
 
-export default InputSlider;
+export default ToolBox;
