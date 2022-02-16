@@ -6,6 +6,7 @@
  */
 
 import * as React from 'react';
+import { useEffect } from 'react';
 import { styled } from '@mui/material/styles';
 import Box from '@mui/material/Box';
 import Grid from '@mui/material/Grid';
@@ -14,6 +15,7 @@ import Slider from '@mui/material/Slider';
 import MuiInput from '@mui/material/Input';
 import ZoomInIcon from '@mui/icons-material/ZoomIn';
 import ZoomOutIcon from '@mui/icons-material/ZoomOut';
+import { perspectiveCamera } from '../Canvas/Camera';
 
 const Input = styled(MuiInput)`
   width: 42px;
@@ -22,7 +24,7 @@ const Input = styled(MuiInput)`
 const InputSlider = (): JSX.Element => {
   const [value, setValue] = React.useState<
     number | string | Array<number | string>
-  >(0);
+  >(1);
 
   const handleSliderChange = (
     event: Event,
@@ -45,13 +47,21 @@ const InputSlider = (): JSX.Element => {
     }
   };
 
+  useEffect(() => {
+    console.log('Setting zoom');
+    if (perspectiveCamera) {
+      perspectiveCamera.zoom = value as number;
+      perspectiveCamera.updateProjectionMatrix();
+    }
+  }, [value]);
+
   return (
     <Box
       // calc ( (100vh - canvas height - AppBar height - html margin)
       sx={{
         height: 'calc(100vh - 70vh - 64px - 16px - 16px)',
         minWidth: '200px',
-        backgroundColor: '#ffeeab',
+        backgroundColor: '#e3e3e3',
         paddingX: '10vw',
         paddingY: '8px',
       }}
@@ -70,7 +80,6 @@ const InputSlider = (): JSX.Element => {
         sx={{
           display: 'flex',
           minWidth: '200px',
-          backgroundColor: '#ffabfe',
         }}
       >
         <Grid container spacing={2} alignItems="center">
@@ -79,9 +88,10 @@ const InputSlider = (): JSX.Element => {
           </Grid>
           <Grid item xs>
             <Slider
-              min={-50}
-              max={50}
-              value={typeof value === 'number' ? value : 0}
+              min={0}
+              max={10}
+              step={0.01}
+              value={typeof value === 'number' ? value : 1}
               onChange={handleSliderChange}
               aria-labelledby="input-slider"
             />
@@ -91,14 +101,14 @@ const InputSlider = (): JSX.Element => {
           </Grid>
           <Grid item>
             <Input
+              sx={{ width: '60px' }}
               value={value}
-              size="small"
               onChange={handleInputChange}
               onBlur={handleBlur}
               inputProps={{
-                step: 10,
-                min: -50,
-                max: 50,
+                step: 0.01,
+                min: 0,
+                max: 500,
                 type: 'number',
                 'aria-labelledby': 'input-slider',
               }}
