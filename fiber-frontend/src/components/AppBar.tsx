@@ -7,17 +7,20 @@
 
 import * as React from 'react';
 import AppBar from '@mui/material/AppBar';
-import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
-import IconButton from '@mui/material/IconButton';
+import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
-import MenuItem from '@mui/material/MenuItem';
+import IconButton from '@mui/material/IconButton';
+
 import Menu from '@mui/material/Menu';
+import MenuItem from '@mui/material/MenuItem';
 import MenuIcon from '@mui/icons-material/Menu';
+
+import ConstructionIcon from '@mui/icons-material/Construction';
 import ZoomInIcon from '@mui/icons-material/ZoomIn';
-import ZoomOutIcon from '@mui/icons-material/ZoomOut';
-import MoreIcon from '@mui/icons-material/MoreVert';
-import { perspectiveCamera } from './MainViewport/Camera';
+import ContrastIcon from '@mui/icons-material/Contrast';
+
+import { perspectiveCamera } from './Canvas/Camera';
 
 const MainAppBar = (): JSX.Element => {
   const [anchorEl, setAnchorEl] = React.useState(null);
@@ -103,11 +106,11 @@ const MainAppBar = (): JSX.Element => {
       <MenuItem>
         <IconButton
           size="large"
-          aria-label="Zoom Out"
+          aria-label="Increase Contrast"
           color="inherit"
-          onClick={zoomOut}
+          // onClick={}
         >
-          <ZoomOutIcon />
+          <ContrastIcon />
         </IconButton>
       </MenuItem>
     </Menu>
@@ -158,11 +161,11 @@ const MainAppBar = (): JSX.Element => {
             </IconButton>
             <IconButton
               size="large"
-              aria-label="Zoom Out"
+              aria-label="Increase Contrast"
               color="inherit"
-              onClick={zoomOut}
+              // onClick={}
             >
-              <ZoomOutIcon />
+              <ContrastIcon />
             </IconButton>
           </Box>
           <Box
@@ -181,7 +184,7 @@ const MainAppBar = (): JSX.Element => {
               onClick={handleMobileMenuOpen}
               color="inherit"
             >
-              <MoreIcon />
+              <ConstructionIcon />
             </IconButton>
           </Box>
         </Toolbar>

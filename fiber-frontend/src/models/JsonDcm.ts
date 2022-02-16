@@ -5,7 +5,6 @@
  * @date 14/02/2022
  */
 
-import * as THREE from 'three';
 import { PixelData } from './PixelData';
 
 export class JsonDcm {
