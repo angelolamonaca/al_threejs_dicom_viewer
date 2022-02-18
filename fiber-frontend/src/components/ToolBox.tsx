@@ -15,13 +15,31 @@ import Slider from '@mui/material/Slider';
 import MuiInput from '@mui/material/Input';
 import ZoomInIcon from '@mui/icons-material/ZoomIn';
 import ZoomOutIcon from '@mui/icons-material/ZoomOut';
+import ContrastIcon from '@mui/icons-material/Contrast';
 import { perspectiveCamera } from './ThreeObjects/Camera/Camera';
+import { Scope } from '../enums/Scope';
+import { Status } from '../enums/Status';
 
 const Input = styled(MuiInput)`
-  width: 42px;
+  width: 60px;
 `;
 
-const ToolBox = (): JSX.Element => {
+const ScopeIcon = (scope: Scope, state: Status): any => {
+  switch (scope) {
+    case Scope.ZOOM: {
+      return state === Status.BEGIN ? <ZoomInIcon /> : <ZoomOutIcon />;
+    }
+    case Scope.CONTRAST: {
+      return state === Status.BEGIN ? <ContrastIcon /> : <ContrastIcon />;
+    }
+    default:
+      break;
+  }
+  return null;
+};
+
+const ToolBox = (props: any): JSX.Element => {
+  const { scope } = props;
   const [value, setValue] = React.useState<
     number | string | Array<number | string>
   >(1);
@@ -48,17 +66,26 @@ const ToolBox = (): JSX.Element => {
   };
 
   useEffect(() => {
-    console.log('Setting zoom');
-    if (perspectiveCamera) {
-      perspectiveCamera.zoom = value as number;
-      perspectiveCamera.updateProjectionMatrix();
+    switch (scope) {
+      case Scope.ZOOM: {
+        if (perspectiveCamera) {
+          perspectiveCamera.zoom = value as number;
+          perspectiveCamera.updateProjectionMatrix();
+        }
+        break;
+      }
+      case Scope.CONTRAST: {
+        break;
+      }
+      default:
+        break;
     }
   }, [value]);
 
   return (
     <Box
-      // calc ( (100vh - canvas height - AppBar height - padding - html margin)
       sx={{
+        minHeight: '64px',
         height: '10vh',
         minWidth: '200px',
         backgroundColor: '#e3e3e3',
@@ -72,10 +99,9 @@ const ToolBox = (): JSX.Element => {
           textAlign: 'center',
         }}
       >
-        Zoom
+        {Scope[scope]}
       </Typography>
       <Box
-        // calc ( (100vh - canvas height - AppBar height - html margin)
         sx={{
           display: 'flex',
           minWidth: '200px',
@@ -100,7 +126,6 @@ const ToolBox = (): JSX.Element => {
           </Grid>
           <Grid item>
             <Input
-              sx={{ width: '60px' }}
               value={value}
               onChange={handleInputChange}
               onBlur={handleBlur}

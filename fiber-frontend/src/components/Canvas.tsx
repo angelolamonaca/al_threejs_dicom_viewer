@@ -16,6 +16,7 @@ const Canvas = (props: any): JSX.Element => (
     {...props}
     id="divCanvas"
     style={{
+      minHeight: '200px',
       height: 'calc(70vh - 16px)',
       minWidth: '200px',
       backgroundColor: '#abccff',

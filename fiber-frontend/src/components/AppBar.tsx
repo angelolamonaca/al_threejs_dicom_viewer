@@ -19,11 +19,9 @@ import MenuIcon from '@mui/icons-material/Menu';
 import ConstructionIcon from '@mui/icons-material/Construction';
 import ZoomInIcon from '@mui/icons-material/ZoomIn';
 import ContrastIcon from '@mui/icons-material/Contrast';
+import { Scope } from '../enums/Scope';
 
-import { Link } from 'react-router-dom';
-import { perspectiveCamera } from './ThreeObjects/Camera/Camera';
-
-const MainAppBar = (): JSX.Element => {
+const MainAppBar = (props: any): JSX.Element => {
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
 
@@ -71,11 +69,10 @@ const MainAppBar = (): JSX.Element => {
 
   const mobileMenuId = 'primary-search-account-menu-mobile';
 
-  const zoomIn = (): void => {
-    perspectiveCamera.position.z -= 0.5;
-  };
-  const zoomOut = (): void => {
-    perspectiveCamera.position.z += 0.5;
+  // eslint-disable-next-line react/destructuring-assignment
+  const setScopeOnParent = (scope: Scope): void => {
+    const { toolBoxScopeToUpdate } = props;
+    toolBoxScopeToUpdate(scope);
   };
 
   const renderMobileMenu = (
@@ -95,23 +92,21 @@ const MainAppBar = (): JSX.Element => {
       onClose={handleMobileMenuClose}
     >
       <MenuItem>
-        <Link to="/zoomtool">
-          <IconButton
-            size="large"
-            aria-label="Zoom In"
-            color="inherit"
-            onClick={zoomIn}
-          >
-            <ZoomInIcon />
-          </IconButton>
-        </Link>
+        <IconButton
+          size="large"
+          aria-label="Zoom In"
+          color="inherit"
+          onClick={() => setScopeOnParent(Scope.ZOOM)}
+        >
+          <ZoomInIcon />
+        </IconButton>
       </MenuItem>
       <MenuItem>
         <IconButton
           size="large"
           aria-label="Increase Contrast"
           color="inherit"
-          // onClick={}
+          onClick={() => setScopeOnParent(Scope.CONTRAST)}
         >
           <ContrastIcon />
         </IconButton>
@@ -124,6 +119,7 @@ const MainAppBar = (): JSX.Element => {
       sx={{
         flexGrow: 1,
         height: '10vh',
+        minHeight: '56px',
       }}
     >
       <AppBar position="static">
@@ -159,21 +155,19 @@ const MainAppBar = (): JSX.Element => {
               },
             }}
           >
-            <Link to="/zoomtool">
-              <IconButton
-                size="large"
-                aria-label="Zoom In"
-                color="inherit"
-                onClick={zoomIn}
-              >
-                <ZoomInIcon />
-              </IconButton>
-            </Link>
+            <IconButton
+              size="large"
+              aria-label="Zoom In"
+              color="inherit"
+              onClick={() => setScopeOnParent(Scope.ZOOM)}
+            >
+              <ZoomInIcon />
+            </IconButton>
             <IconButton
               size="large"
               aria-label="Increase Contrast"
               color="inherit"
-              // onClick={}
+              onClick={() => setScopeOnParent(Scope.CONTRAST)}
             >
               <ContrastIcon />
             </IconButton>

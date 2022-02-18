@@ -25,6 +25,7 @@ const BottomNavigationBar = (): JSX.Element => {
   return (
     <BottomNavigation
       sx={{
+        minHeight: '56px',
         height: '10vh',
       }}
       value={value}
