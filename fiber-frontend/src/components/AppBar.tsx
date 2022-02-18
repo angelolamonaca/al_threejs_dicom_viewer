@@ -16,7 +16,7 @@ import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 import MenuIcon from '@mui/icons-material/Menu';
 
-import ConstructionIcon from '@mui/icons-material/Construction';
+import DesignServicesIcon from '@mui/icons-material/DesignServices';
 import ZoomInIcon from '@mui/icons-material/ZoomIn';
 import ContrastIcon from '@mui/icons-material/Contrast';
 import { Scope } from '../enums/Scope';
@@ -188,7 +188,7 @@ const MainAppBar = (props: any): JSX.Element => {
               onClick={handleMobileMenuOpen}
               color="inherit"
             >
-              <ConstructionIcon />
+              <DesignServicesIcon />
             </IconButton>
           </Box>
         </Toolbar>
