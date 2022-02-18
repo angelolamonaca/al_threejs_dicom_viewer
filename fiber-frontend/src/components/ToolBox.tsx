@@ -17,9 +17,9 @@ import AddIcon from '@mui/icons-material/Add';
 import RemoveIcon from '@mui/icons-material/Remove';
 import ZoomInIcon from '@mui/icons-material/ZoomIn';
 import ZoomOutIcon from '@mui/icons-material/ZoomOut';
-import { perspectiveCamera } from './ThreeObjects/Camera/CameraElement';
 import { Scope } from '../enums/Scope';
 import { Status } from '../enums/Status';
+import Camera from './ThreeObjects/Camera/Camera';
 
 const Input = styled(MuiInput)`
   width: 60px;
@@ -69,9 +69,9 @@ const ToolBox = (props: any): JSX.Element => {
   useEffect(() => {
     switch (scope) {
       case Scope.ZOOM: {
-        if (perspectiveCamera) {
-          perspectiveCamera.zoom = value as number;
-          perspectiveCamera.updateProjectionMatrix();
+        if (Camera.perspectiveCamera) {
+          Camera.perspectiveCamera.zoom = value as number;
+          Camera.perspectiveCamera.updateProjectionMatrix();
         }
         break;
       }

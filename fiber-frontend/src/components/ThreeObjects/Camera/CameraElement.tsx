@@ -1,5 +1,5 @@
 import * as THREE from 'three';
-import { Vector3 } from 'three';
+import { Object3D, Vector3 } from 'three';
 import { useThree } from '@react-three/fiber';
 import React from 'react';
 import Camera from './Camera';
@@ -11,15 +11,17 @@ import Camera from './Camera';
  * @date 14/02/2022
  */
 
-// eslint-disable-next-line import/no-mutable-exports
-export let perspectiveCamera: THREE.PerspectiveCamera;
-
 const CameraElement = ({ position }: { position: Vector3 }): JSX.Element => {
   const divCanvas = document.getElementById('divCanvas');
   const canvas = divCanvas?.children[0] as HTMLCanvasElement;
 
-  const { gl } = useThree();
-  perspectiveCamera = Camera(canvas.width, canvas.height, position);
+  const { gl, camera } = useThree();
+  const perspectiveCamera = Camera.getCamera(
+    camera,
+    canvas.width,
+    canvas.height,
+    position,
+  );
   gl.setSize(canvas.width, canvas.height);
 
   const scene = new THREE.Scene();

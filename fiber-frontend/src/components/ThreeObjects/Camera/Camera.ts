@@ -1,6 +1,5 @@
 import * as THREE from 'three';
 import { PerspectiveCamera, Vector3 } from 'three';
-import { useThree } from '@react-three/fiber';
 
 /**
  * @created 18/02/2022 - 09:42
@@ -9,18 +8,34 @@ import { useThree } from '@react-three/fiber';
  * @date 18/02/2022
  */
 
-const Camera = (
-  canvasWidth: number,
-  canvasHeight: number,
-  position: Vector3,
-): THREE.PerspectiveCamera => {
-  const { camera } = useThree();
-  const perspectiveCamera = camera as PerspectiveCamera;
-  perspectiveCamera.aspect = canvasWidth / canvasHeight;
-  perspectiveCamera.updateProjectionMatrix();
-  perspectiveCamera.position.set(position.x, position.y, position.z);
+class Camera {
+  static perspectiveCamera: THREE.PerspectiveCamera;
 
-  return perspectiveCamera;
-};
+  public static getCamera(
+    camera?: THREE.Camera,
+    canvasWidth?: number,
+    canvasHeight?: number,
+    position?: Vector3,
+  ): THREE.PerspectiveCamera {
+    if (!Camera.perspectiveCamera) {
+      Camera.perspectiveCamera = camera as PerspectiveCamera;
+
+      if (canvasWidth && canvasHeight) {
+        Camera.perspectiveCamera.aspect = canvasWidth / canvasHeight;
+      }
+      if (position) {
+        Camera.perspectiveCamera.position.set(
+          position.x,
+          position.y,
+          position.z,
+        );
+      }
+
+      Camera.perspectiveCamera.updateProjectionMatrix();
+    }
+
+    return Camera.perspectiveCamera;
+  }
+}
 
 export default Camera;
