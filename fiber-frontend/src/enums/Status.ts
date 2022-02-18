@@ -6,6 +6,6 @@
  */
 
 export enum Status {
-  BEGIN,
-  END,
+  DECREASE,
+  INCREASE,
 }

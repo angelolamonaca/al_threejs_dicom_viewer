@@ -13,9 +13,10 @@ import Grid from '@mui/material/Grid';
 import Typography from '@mui/material/Typography';
 import Slider from '@mui/material/Slider';
 import MuiInput from '@mui/material/Input';
+import AddIcon from '@mui/icons-material/Add';
+import RemoveIcon from '@mui/icons-material/Remove';
 import ZoomInIcon from '@mui/icons-material/ZoomIn';
 import ZoomOutIcon from '@mui/icons-material/ZoomOut';
-import ContrastIcon from '@mui/icons-material/Contrast';
 import { perspectiveCamera } from './ThreeObjects/Camera/Camera';
 import { Scope } from '../enums/Scope';
 import { Status } from '../enums/Status';
@@ -27,10 +28,10 @@ const Input = styled(MuiInput)`
 const ScopeIcon = (scope: Scope, state: Status): any => {
   switch (scope) {
     case Scope.ZOOM: {
-      return state === Status.BEGIN ? <ZoomInIcon /> : <ZoomOutIcon />;
+      return state === Status.DECREASE ? <ZoomOutIcon /> : <ZoomInIcon />;
     }
     case Scope.CONTRAST: {
-      return state === Status.BEGIN ? <ContrastIcon /> : <ContrastIcon />;
+      return state === Status.DECREASE ? <RemoveIcon /> : <AddIcon />;
     }
     default:
       break;
@@ -108,9 +109,7 @@ const ToolBox = (props: any): JSX.Element => {
         }}
       >
         <Grid container spacing={2} alignItems="center">
-          <Grid item>
-            <ZoomOutIcon />
-          </Grid>
+          <Grid item>{ScopeIcon(scope, Status.DECREASE)}</Grid>
           <Grid item xs>
             <Slider
               min={0}
@@ -121,9 +120,7 @@ const ToolBox = (props: any): JSX.Element => {
               aria-labelledby="input-slider"
             />
           </Grid>
-          <Grid item>
-            <ZoomInIcon />
-          </Grid>
+          <Grid item>{ScopeIcon(scope, Status.INCREASE)}</Grid>
           <Grid item>
             <Input
               value={value}
