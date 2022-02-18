@@ -41,31 +41,79 @@ const ScopeIcon = (scope: Scope, state: Status): any => {
 
 const ToolBox = (props: any): JSX.Element => {
   const { scope } = props;
-  const [zoomValue, setZoomValue] = React.useState<
-    number | string | Array<number | string>
-  >(1);
-  const [contrastValue, setConstrastValue] = React.useState<
-    number | string | Array<number | string>
-  >(1);
+  const [zoomValue, setZoomValue] = React.useState<number | string | Array<number | string>>(1);
+  const [contrastValue, setContrastValue] = React.useState<number | string | Array<number | string>>(1);
 
   const handleSliderChange = (
     event: Event,
     newValue: number | number[],
   ): void => {
-    setZoomValue(newValue);
+    switch (scope) {
+      case Scope.ZOOM: {
+        setZoomValue(newValue);
+        break;
+      }
+      case Scope.CONTRAST: {
+        setContrastValue(newValue);
+        break;
+      }
+
+      default:
+        break;
+    }
   };
 
   const handleInputChange = (
     event: React.ChangeEvent<HTMLInputElement>,
   ): void => {
-    setZoomValue(event.target.value === '' ? '' : Number(event.target.value));
+    switch (scope) {
+      case Scope.ZOOM: {
+        setZoomValue(
+          event.target.value === '' ? '' : Number(event.target.value),
+        );
+        break;
+      }
+      case Scope.CONTRAST: {
+        setContrastValue(
+          event.target.value === '' ? '' : Number(event.target.value),
+        );
+        break;
+      }
+
+      default:
+        break;
+    }
   };
 
   const handleBlur = (): void => {
     if (zoomValue < 0) {
-      setZoomValue(0);
+      switch (scope) {
+        case Scope.ZOOM: {
+          setZoomValue(0);
+          break;
+        }
+        case Scope.CONTRAST: {
+          setContrastValue(0);
+          break;
+        }
+
+        default:
+          break;
+      }
     } else if (zoomValue > 100) {
-      setZoomValue(100);
+      switch (scope) {
+        case Scope.ZOOM: {
+          setZoomValue(100);
+          break;
+        }
+        case Scope.CONTRAST: {
+          setContrastValue(100);
+          break;
+        }
+
+        default:
+          break;
+      }
     }
   };
 
@@ -117,7 +165,16 @@ const ToolBox = (props: any): JSX.Element => {
               min={0}
               max={10}
               step={0.01}
-              value={typeof zoomValue === 'number' ? zoomValue : 1}
+              value={
+                // eslint-disable-next-line no-nested-ternary
+                scope === Scope.ZOOM
+                  ? typeof zoomValue === 'number'
+                    ? zoomValue
+                    : 1
+                  : typeof contrastValue === 'number'
+                    ? contrastValue
+                    : 1
+              }
               onChange={handleSliderChange}
               aria-labelledby="input-slider"
             />
@@ -125,7 +182,14 @@ const ToolBox = (props: any): JSX.Element => {
           <Grid item>{ScopeIcon(scope, Status.INCREASE)}</Grid>
           <Grid item>
             <Input
-              value={zoomValue}
+              value={
+                // eslint-disable-next-line no-nested-ternary
+                scope === Scope.ZOOM
+                  ? typeof zoomValue === 'number'
+                    ? zoomValue : 1
+                  : typeof contrastValue === 'number'
+                    ? contrastValue : 1
+              }
               onChange={handleInputChange}
               onBlur={handleBlur}
               inputProps={{
