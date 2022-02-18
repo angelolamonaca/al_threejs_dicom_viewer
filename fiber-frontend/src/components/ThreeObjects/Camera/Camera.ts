@@ -11,6 +11,10 @@ import { PerspectiveCamera, Vector3 } from 'three';
 class Camera {
   static perspectiveCamera: THREE.PerspectiveCamera;
 
+  // eslint-disable-next-line max-len
+  // eslint-disable-next-line no-useless-constructor,@typescript-eslint/no-empty-function
+  private constructor() {}
+
   public static getCamera(
     camera?: THREE.Camera,
     canvasWidth?: number,
@@ -35,6 +39,11 @@ class Camera {
     }
 
     return Camera.perspectiveCamera;
+  }
+
+  static setZoom(value: number): void {
+    Camera.perspectiveCamera.zoom = value as number;
+    Camera.perspectiveCamera.updateProjectionMatrix();
   }
 }
 

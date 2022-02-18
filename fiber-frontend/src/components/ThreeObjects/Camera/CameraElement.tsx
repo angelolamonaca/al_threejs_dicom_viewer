@@ -1,5 +1,5 @@
 import * as THREE from 'three';
-import { Object3D, Vector3 } from 'three';
+import { Vector3 } from 'three';
 import { useThree } from '@react-three/fiber';
 import React from 'react';
 import Camera from './Camera';

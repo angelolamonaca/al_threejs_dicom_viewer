@@ -41,7 +41,10 @@ const ScopeIcon = (scope: Scope, state: Status): any => {
 
 const ToolBox = (props: any): JSX.Element => {
   const { scope } = props;
-  const [value, setValue] = React.useState<
+  const [zoomValue, setZoomValue] = React.useState<
+    number | string | Array<number | string>
+  >(1);
+  const [contrastValue, setConstrastValue] = React.useState<
     number | string | Array<number | string>
   >(1);
 
@@ -49,20 +52,20 @@ const ToolBox = (props: any): JSX.Element => {
     event: Event,
     newValue: number | number[],
   ): void => {
-    setValue(newValue);
+    setZoomValue(newValue);
   };
 
   const handleInputChange = (
     event: React.ChangeEvent<HTMLInputElement>,
   ): void => {
-    setValue(event.target.value === '' ? '' : Number(event.target.value));
+    setZoomValue(event.target.value === '' ? '' : Number(event.target.value));
   };
 
   const handleBlur = (): void => {
-    if (value < 0) {
-      setValue(0);
-    } else if (value > 100) {
-      setValue(100);
+    if (zoomValue < 0) {
+      setZoomValue(0);
+    } else if (zoomValue > 100) {
+      setZoomValue(100);
     }
   };
 
@@ -70,8 +73,7 @@ const ToolBox = (props: any): JSX.Element => {
     switch (scope) {
       case Scope.ZOOM: {
         if (Camera.perspectiveCamera) {
-          Camera.perspectiveCamera.zoom = value as number;
-          Camera.perspectiveCamera.updateProjectionMatrix();
+          Camera.setZoom(zoomValue as number);
         }
         break;
       }
@@ -81,7 +83,7 @@ const ToolBox = (props: any): JSX.Element => {
       default:
         break;
     }
-  }, [value]);
+  }, [zoomValue]);
 
   return (
     <Box
@@ -115,7 +117,7 @@ const ToolBox = (props: any): JSX.Element => {
               min={0}
               max={10}
               step={0.01}
-              value={typeof value === 'number' ? value : 1}
+              value={typeof zoomValue === 'number' ? zoomValue : 1}
               onChange={handleSliderChange}
               aria-labelledby="input-slider"
             />
@@ -123,7 +125,7 @@ const ToolBox = (props: any): JSX.Element => {
           <Grid item>{ScopeIcon(scope, Status.INCREASE)}</Grid>
           <Grid item>
             <Input
-              value={value}
+              value={zoomValue}
               onChange={handleInputChange}
               onBlur={handleBlur}
               inputProps={{
