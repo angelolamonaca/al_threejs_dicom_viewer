@@ -6,7 +6,7 @@ import {
 import { zeroPad } from '../../../utils/math';
 
 /**
- * @created 14/02/2022/02/2022 - 17:06
+ * @created 14/02/2022 - 17:06
  * @project al_threejs_dicom_viewer
  * @author Angelo Lamonaca - https://github.com/angelolamonaca
  * @date 14/02/2022

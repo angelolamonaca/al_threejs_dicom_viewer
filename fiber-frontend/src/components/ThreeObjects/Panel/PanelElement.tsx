@@ -5,16 +5,16 @@ import { ThreeEvent } from '@react-three/fiber';
 import { JsonDcm } from '../../../models/JsonDcm';
 import { getImageFromDicomConverterApi } from '../../../services/imageService';
 import { panelScrollHandler } from './PanelEvents';
-import { PixelData } from '../../../models/PixelData';
+import Panel from './Panel';
 
 /**
- * @created 14/02/2022/02/2022 - 17:01
+ * @created 14/02/2022 - 17:01
  * @project al_threejs_dicom_viewer
  * @author Angelo Lamonaca
  * @date 14/02/2022
  */
 
-const Panel = ({
+const PanelElement = ({
   position,
   size,
 }: {
@@ -47,16 +47,10 @@ const Panel = ({
       });
   }, [imgId]);
 
-  const scene = new THREE.Scene();
-  const geometry = new THREE.BoxGeometry(size.x, size.y, size.z);
-  let dataTexture = new THREE.DataTexture();
+  let scene = new THREE.Scene();
   if (jsonDcm.pixelData) {
-    dataTexture = PixelData.toTexture(jsonDcm.pixelData);
+    scene = Panel(size, jsonDcm.pixelData);
   }
-
-  const material = new THREE.MeshBasicMaterial({ map: dataTexture });
-  const mesh = new THREE.Mesh(geometry, material);
-  scene.add(mesh);
 
   return (
     <primitive
@@ -69,4 +63,4 @@ const Panel = ({
   );
 };
 
-export default Panel;
+export default PanelElement;

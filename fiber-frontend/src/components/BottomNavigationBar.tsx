@@ -1,5 +1,5 @@
 /**
- * @created 16/02/2022/02/2022 - 11:13
+ * @created 16/02/2022 - 11:13
  * @project al_threejs_dicom_viewer
  * @author Angelo Lamonaca
  * @date 16/02/2022

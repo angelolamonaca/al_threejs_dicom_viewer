@@ -1,10 +1,11 @@
 import * as THREE from 'three';
-import { PerspectiveCamera, Vector3 } from 'three';
+import { Vector3 } from 'three';
 import { useThree } from '@react-three/fiber';
 import React from 'react';
+import Camera from './Camera';
 
 /**
- * @created 14/02/2022/02/2022 - 16:58
+ * @created 14/02/2022 - 16:58
  * @project al_threejs_dicom_viewer
  * @author Angelo Lamonaca - https://github.com/angelolamonaca
  * @date 14/02/2022
@@ -13,15 +14,12 @@ import React from 'react';
 // eslint-disable-next-line import/no-mutable-exports
 export let perspectiveCamera: THREE.PerspectiveCamera;
 
-const Camera = ({ position }: { position: Vector3 }): JSX.Element => {
+const CameraElement = ({ position }: { position: Vector3 }): JSX.Element => {
   const divCanvas = document.getElementById('divCanvas');
   const canvas = divCanvas?.children[0] as HTMLCanvasElement;
 
-  const { camera, gl } = useThree();
-  perspectiveCamera = camera as PerspectiveCamera;
-  perspectiveCamera.aspect = canvas.width / canvas.height;
-  perspectiveCamera.updateProjectionMatrix();
-  perspectiveCamera.position.set(position.x, position.y, position.z);
+  const { gl } = useThree();
+  perspectiveCamera = Camera(canvas.width, canvas.height, position);
   gl.setSize(canvas.width, canvas.height);
 
   const scene = new THREE.Scene();
@@ -29,4 +27,4 @@ const Camera = ({ position }: { position: Vector3 }): JSX.Element => {
   return <primitive object={scene} />;
 };
 
-export default Camera;
+export default CameraElement;
