@@ -1,6 +1,7 @@
 import * as THREE from 'three';
 import { Vector3 } from 'three';
 import { PixelData } from '../../../models/PixelData';
+import { Texture } from './Texture/Texture';
 
 /**
  * @created 18/02/2022 - 09:47
@@ -12,7 +13,7 @@ import { PixelData } from '../../../models/PixelData';
 const Panel = (size: Vector3, pixelData: PixelData): THREE.Scene => {
   const scene = new THREE.Scene();
   const geometry = new THREE.BoxGeometry(size.x, size.y, size.z);
-  const dataTexture = PixelData.toTexture(pixelData);
+  const dataTexture = Texture.getDataTexture(pixelData);
 
   const material = new THREE.MeshBasicMaterial({ map: dataTexture });
   const mesh = new THREE.Mesh(geometry, material);

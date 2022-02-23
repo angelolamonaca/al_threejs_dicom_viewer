@@ -20,6 +20,7 @@ import ZoomOutIcon from '@mui/icons-material/ZoomOut';
 import { Scope } from '../enums/Scope';
 import { Status } from '../enums/Status';
 import Camera from './ThreeObjects/Camera/Camera';
+import { Texture } from './ThreeObjects/Panel/Texture/Texture';
 
 const Input = styled(MuiInput)`
   width: 60px;
@@ -45,6 +46,12 @@ const ToolBox = (props: any): JSX.Element => {
     React.useState<number | string | Array<number | string>>(1);
   const [contrastValue, setContrastValue] =
     React.useState<number | string | Array<number | string>>(0);
+
+  // eslint-disable-next-line react/destructuring-assignment
+  const setContrastOnParent = (contrast: number): void => {
+    const { contrastToApply } = props;
+    contrastToApply(contrast);
+  };
 
   const handleSliderChange = (
     event: Event,
@@ -87,38 +94,6 @@ const ToolBox = (props: any): JSX.Element => {
     }
   };
 
-  const handleBlur = (): void => {
-    if (zoomValue < 0) {
-      switch (scope) {
-        case Scope.ZOOM: {
-          setZoomValue(0);
-          break;
-        }
-        case Scope.CONTRAST: {
-          setContrastValue(0);
-          break;
-        }
-
-        default:
-          break;
-      }
-    } else if (zoomValue > 100) {
-      switch (scope) {
-        case Scope.ZOOM: {
-          setZoomValue(100);
-          break;
-        }
-        case Scope.CONTRAST: {
-          setContrastValue(100);
-          break;
-        }
-
-        default:
-          break;
-      }
-    }
-  };
-
   useEffect(() => {
     switch (scope) {
       case Scope.ZOOM: {
@@ -128,6 +103,8 @@ const ToolBox = (props: any): JSX.Element => {
         break;
       }
       case Scope.CONTRAST: {
+        Texture.contrastToApply = contrastValue as number;
+        setContrastOnParent(contrastValue as number);
         break;
       }
       default:
@@ -168,14 +145,14 @@ const ToolBox = (props: any): JSX.Element => {
                 // eslint-disable-next-line no-nested-ternary
                 scope === Scope.ZOOM
                   ? 0
-                  : scope === Scope.CONTRAST ? -100
+                  : scope === Scope.CONTRAST ? -255
                     : 0
               }
               max={
                 // eslint-disable-next-line no-nested-ternary
                 scope === Scope.ZOOM
                   ? 10
-                  : scope === Scope.CONTRAST ? 100
+                  : scope === Scope.CONTRAST ? 255
                     : 10
               }
               step={0.01}
@@ -203,11 +180,13 @@ const ToolBox = (props: any): JSX.Element => {
                 scope === Scope.ZOOM
                   ? typeof zoomValue === 'number'
                     ? zoomValue : 1
-                  : typeof contrastValue === 'number'
-                    ? contrastValue : 1
+                  // eslint-disable-next-line no-nested-ternary
+                  : scope === Scope.ZOOM
+                    ? typeof contrastValue === 'number'
+                      ? contrastValue : 0
+                    : 1
               }
               onChange={handleInputChange}
-              onBlur={handleBlur}
               inputProps={
                 // eslint-disable-next-line no-nested-ternary
                 scope === Scope.ZOOM
@@ -220,8 +199,8 @@ const ToolBox = (props: any): JSX.Element => {
                   }
                   : scope === Scope.CONTRAST ? {
                     step: 0.01,
-                    min: -100,
-                    max: 100,
+                    min: -255,
+                    max: 255,
                     type: 'number',
                     'aria-labelledby': 'input-slider',
                   }

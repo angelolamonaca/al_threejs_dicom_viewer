@@ -1,5 +1,4 @@
 import * as THREE from 'three';
-import { Vector3 } from 'three';
 import React, { useEffect, useState } from 'react';
 import { ThreeEvent } from '@react-three/fiber';
 import { JsonDcm } from '../../../models/JsonDcm';
@@ -14,15 +13,17 @@ import Panel from './Panel';
  * @date 14/02/2022
  */
 
-const PanelElement = ({
-  position,
-  size,
-}: {
-  position: Vector3;
-  size: Vector3;
-}): JSX.Element => {
+const PanelElement = (
+  props: any,
+): JSX.Element => {
+  const {
+    position,
+    size,
+  } = props;
   const [imgId, setImgId] = useState('000');
   const [jsonDcm, setJsonDcm] = useState(new JsonDcm());
+  const { contrastApplied } = props;
+  console.log('Line 27 in PanelElement.tsx', contrastApplied);
 
   useEffect(() => {
     getImageFromDicomConverterApi(imgId, true)

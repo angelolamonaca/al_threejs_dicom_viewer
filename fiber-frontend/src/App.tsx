@@ -18,11 +18,18 @@ const App: FC = () => {
   const toolBoxScopeToUpdate = (scope: Scope): void => {
     setToolBoxScope(scope);
   };
+
+  const [contrastApplied, setContrastApplied] = React.useState(0);
+
+  const contrastToApply = (contrast: number): void => {
+    setContrastApplied(contrast);
+  };
+
   return (
     <div className="App">
       <MainAppBar toolBoxScopeToUpdate={toolBoxScopeToUpdate} />
-      <Canvas />
-      <ToolBox scope={toolBoxScope} />
+      <Canvas contrastApplied={contrastApplied} />
+      <ToolBox scope={toolBoxScope} contrastToApply={contrastToApply} />
       <BottomNavigationBar />
     </div>
   );
