@@ -41,8 +41,10 @@ const ScopeIcon = (scope: Scope, state: Status): any => {
 
 const ToolBox = (props: any): JSX.Element => {
   const { scope } = props;
-  const [zoomValue, setZoomValue] = React.useState<number | string | Array<number | string>>(1);
-  const [contrastValue, setContrastValue] = React.useState<number | string | Array<number | string>>(1);
+  const [zoomValue, setZoomValue] =
+    React.useState<number | string | Array<number | string>>(1);
+  const [contrastValue, setContrastValue] =
+    React.useState<number | string | Array<number | string>>(0);
 
   const handleSliderChange = (
     event: Event,
@@ -131,7 +133,7 @@ const ToolBox = (props: any): JSX.Element => {
       default:
         break;
     }
-  }, [zoomValue]);
+  }, [scope, zoomValue, contrastValue]);
 
   return (
     <Box
@@ -162,8 +164,20 @@ const ToolBox = (props: any): JSX.Element => {
           <Grid item>{ScopeIcon(scope, Status.DECREASE)}</Grid>
           <Grid item xs>
             <Slider
-              min={0}
-              max={10}
+              min={
+                // eslint-disable-next-line no-nested-ternary
+                scope === Scope.ZOOM
+                  ? 0
+                  : scope === Scope.CONTRAST ? -100
+                    : 0
+              }
+              max={
+                // eslint-disable-next-line no-nested-ternary
+                scope === Scope.ZOOM
+                  ? 10
+                  : scope === Scope.CONTRAST ? 100
+                    : 10
+              }
               step={0.01}
               value={
                 // eslint-disable-next-line no-nested-ternary
@@ -171,8 +185,10 @@ const ToolBox = (props: any): JSX.Element => {
                   ? typeof zoomValue === 'number'
                     ? zoomValue
                     : 1
-                  : typeof contrastValue === 'number'
+                  // eslint-disable-next-line no-nested-ternary
+                  : scope === Scope.CONTRAST ? typeof contrastValue === 'number'
                     ? contrastValue
+                    : 0
                     : 1
               }
               onChange={handleSliderChange}
@@ -192,13 +208,31 @@ const ToolBox = (props: any): JSX.Element => {
               }
               onChange={handleInputChange}
               onBlur={handleBlur}
-              inputProps={{
-                step: 0.01,
-                min: 0,
-                max: 500,
-                type: 'number',
-                'aria-labelledby': 'input-slider',
-              }}
+              inputProps={
+                // eslint-disable-next-line no-nested-ternary
+                scope === Scope.ZOOM
+                  ? {
+                    step: 0.01,
+                    min: 0,
+                    max: 500,
+                    type: 'number',
+                    'aria-labelledby': 'input-slider',
+                  }
+                  : scope === Scope.CONTRAST ? {
+                    step: 0.01,
+                    min: -100,
+                    max: 100,
+                    type: 'number',
+                    'aria-labelledby': 'input-slider',
+                  }
+                    : {
+                      step: 0.01,
+                      min: 0,
+                      max: 500,
+                      type: 'number',
+                      'aria-labelledby': 'input-slider',
+                    }
+              }
             />
           </Grid>
         </Grid>
