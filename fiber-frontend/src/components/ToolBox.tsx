@@ -181,7 +181,7 @@ const ToolBox = (props: any): JSX.Element => {
                   ? typeof zoomValue === 'number'
                     ? zoomValue : 1
                   // eslint-disable-next-line no-nested-ternary
-                  : scope === Scope.ZOOM
+                  : scope === Scope.CONTRAST
                     ? typeof contrastValue === 'number'
                       ? contrastValue : 0
                     : 1

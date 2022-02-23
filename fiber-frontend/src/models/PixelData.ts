@@ -20,15 +20,15 @@ export class PixelData extends Array {
     let i = 0;
     for (let x = pixelData.length - 1; x >= 0; x--) {
       for (let y = 0; y < pixelData.length; y++) {
-        const r = pixelData[x][y] > 0 ? pixelData[x][y] + contrastToApply : 0;
+        const r = pixelData[x][y] + contrastToApply;
         // eslint-disable-next-line no-nested-ternary
         rgbaPixelData[i] = r < 0 ? 0 : r >= 255 ? 255 : r;
         i++;
-        const g = pixelData[x][y] > 0 ? pixelData[x][y] + contrastToApply : 0;
+        const g = pixelData[x][y] + contrastToApply;
         // eslint-disable-next-line no-nested-ternary
         rgbaPixelData[i] = g < 0 ? 0 : g >= 255 ? 255 : g;
         i++;
-        const b = pixelData[x][y] > 0 ? pixelData[x][y] + contrastToApply : 0;
+        const b = pixelData[x][y] + contrastToApply;
         // eslint-disable-next-line no-nested-ternary
         rgbaPixelData[i] = b < 0 ? 0 : b >= 255 ? 255 : b;
         i++;
