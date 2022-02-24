@@ -1,7 +1,7 @@
 import * as THREE from 'three';
 import { Vector3 } from 'three';
-import { PixelData } from '../../../models/PixelData';
-import { Texture } from './Texture/Texture';
+import { PixelData } from './PixelData';
+import { Texture } from './Texture';
 
 /**
  * @created 18/02/2022 - 09:47
