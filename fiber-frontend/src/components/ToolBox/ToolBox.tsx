@@ -7,26 +7,22 @@
 
 import * as React from 'react';
 import { useEffect } from 'react';
-import { styled } from '@mui/material/styles';
 import Box from '@mui/material/Box';
 import Grid from '@mui/material/Grid';
 import Typography from '@mui/material/Typography';
-import Slider from '@mui/material/Slider';
-import MuiInput from '@mui/material/Input';
 import AddIcon from '@mui/icons-material/Add';
 import RemoveIcon from '@mui/icons-material/Remove';
 import ZoomInIcon from '@mui/icons-material/ZoomIn';
 import ZoomOutIcon from '@mui/icons-material/ZoomOut';
-import { Scope } from '../enums/Scope';
-import { Status } from '../enums/Status';
-import Camera from './ThreeObjects/Camera/Camera';
-import { Texture } from './ThreeObjects/Panel/Texture/Texture';
+import ErrorIcon from '@mui/icons-material/Error';
+import { Scope } from '../../enums/Scope';
+import { Status } from '../../enums/Status';
+import Camera from '../../models/Camera';
+import { Texture } from '../../models/Texture';
+import ToolBoxSlider from './ToolBoxSlider';
+import ToolBoxInput from './ToolBoxInput';
 
-const Input = styled(MuiInput)`
-  width: 60px;
-`;
-
-const ScopeIcon = (scope: Scope, state: Status): any => {
+const ScopeIcon = (scope: Scope, state: Status): JSX.Element => {
   switch (scope) {
     case Scope.ZOOM: {
       return state === Status.DECREASE ? <ZoomOutIcon /> : <ZoomInIcon />;
@@ -37,7 +33,7 @@ const ScopeIcon = (scope: Scope, state: Status): any => {
     default:
       break;
   }
-  return null;
+  return <ErrorIcon />;
 };
 
 const ToolBox = (props: any): JSX.Element => {
@@ -47,7 +43,6 @@ const ToolBox = (props: any): JSX.Element => {
   const [contrastValue, setContrastValue] =
     React.useState<number | string | Array<number | string>>(0);
 
-  // eslint-disable-next-line react/destructuring-assignment
   const setContrastOnParent = (contrast: number): void => {
     const { contrastToApply } = props;
     contrastToApply(contrast);
@@ -66,7 +61,6 @@ const ToolBox = (props: any): JSX.Element => {
         setContrastValue(newValue);
         break;
       }
-
       default:
         break;
     }
@@ -88,7 +82,6 @@ const ToolBox = (props: any): JSX.Element => {
         );
         break;
       }
-
       default:
         break;
     }
@@ -140,78 +133,20 @@ const ToolBox = (props: any): JSX.Element => {
         <Grid container spacing={2} alignItems="center">
           <Grid item>{ScopeIcon(scope, Status.DECREASE)}</Grid>
           <Grid item xs>
-            <Slider
-              min={
-                // eslint-disable-next-line no-nested-ternary
-                scope === Scope.ZOOM
-                  ? 0
-                  : scope === Scope.CONTRAST ? -255
-                    : 0
-              }
-              max={
-                // eslint-disable-next-line no-nested-ternary
-                scope === Scope.ZOOM
-                  ? 10
-                  : scope === Scope.CONTRAST ? 255
-                    : 10
-              }
-              step={0.01}
-              value={
-                // eslint-disable-next-line no-nested-ternary
-                scope === Scope.ZOOM
-                  ? typeof zoomValue === 'number'
-                    ? zoomValue
-                    : 1
-                  // eslint-disable-next-line no-nested-ternary
-                  : scope === Scope.CONTRAST ? typeof contrastValue === 'number'
-                    ? contrastValue
-                    : 0
-                    : 1
-              }
-              onChange={handleSliderChange}
-              aria-labelledby="input-slider"
+            <ToolBoxSlider
+              scope={scope}
+              zoomValue={zoomValue}
+              contrastValue={contrastValue}
+              handleSliderChange={handleSliderChange}
             />
           </Grid>
           <Grid item>{ScopeIcon(scope, Status.INCREASE)}</Grid>
           <Grid item>
-            <Input
-              value={
-                // eslint-disable-next-line no-nested-ternary
-                scope === Scope.ZOOM
-                  ? typeof zoomValue === 'number'
-                    ? zoomValue : 1
-                  // eslint-disable-next-line no-nested-ternary
-                  : scope === Scope.CONTRAST
-                    ? typeof contrastValue === 'number'
-                      ? contrastValue : 0
-                    : 1
-              }
-              onChange={handleInputChange}
-              inputProps={
-                // eslint-disable-next-line no-nested-ternary
-                scope === Scope.ZOOM
-                  ? {
-                    step: 0.01,
-                    min: 0,
-                    max: 500,
-                    type: 'number',
-                    'aria-labelledby': 'input-slider',
-                  }
-                  : scope === Scope.CONTRAST ? {
-                    step: 0.01,
-                    min: -255,
-                    max: 255,
-                    type: 'number',
-                    'aria-labelledby': 'input-slider',
-                  }
-                    : {
-                      step: 0.01,
-                      min: 0,
-                      max: 500,
-                      type: 'number',
-                      'aria-labelledby': 'input-slider',
-                    }
-              }
+            <ToolBoxInput
+              scope={scope}
+              zoomValue={zoomValue}
+              contrastValue={contrastValue}
+              handleInputChange={handleInputChange}
             />
           </Grid>
         </Grid>

@@ -2,7 +2,7 @@ import * as THREE from 'three';
 import { Vector3 } from 'three';
 import { useThree } from '@react-three/fiber';
 import React from 'react';
-import Camera from './Camera';
+import Camera from '../../models/Camera';
 
 /**
  * @created 14/02/2022 - 16:58
@@ -11,7 +11,7 @@ import Camera from './Camera';
  * @date 14/02/2022
  */
 
-const CameraElement = ({ position }: { position: Vector3 }): JSX.Element => {
+const CanvasCamera = ({ position }: { position: Vector3 }): JSX.Element => {
   const divCanvas = document.getElementById('divCanvas');
   const canvas = divCanvas?.children[0] as HTMLCanvasElement;
 
@@ -29,4 +29,4 @@ const CameraElement = ({ position }: { position: Vector3 }): JSX.Element => {
   return <primitive object={scene} />;
 };
 
-export default CameraElement;
+export default CanvasCamera;

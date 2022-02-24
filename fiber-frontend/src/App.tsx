@@ -6,9 +6,9 @@
  */
 
 import React, { FC } from 'react';
-import Canvas from './components/Canvas';
-import MainAppBar from './components/AppBar';
-import ToolBox from './components/ToolBox';
+import Canvas from './components/Canvas/Canvas';
+import MainAppBar from './components/AppBar/AppBar';
+import ToolBox from './components/ToolBox/ToolBox';
 import BottomNavigationBar from './components/BottomNavigationBar';
 import { Scope } from './enums/Scope';
 
