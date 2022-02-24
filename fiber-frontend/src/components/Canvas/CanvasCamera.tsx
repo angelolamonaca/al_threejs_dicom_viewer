@@ -15,7 +15,10 @@ const CanvasCamera = ({ position }: { position: Vector3 }): JSX.Element => {
   const divCanvas = document.getElementById('divCanvas');
   const canvas = divCanvas?.children[0] as HTMLCanvasElement;
 
-  const { gl, camera } = useThree();
+  const {
+    gl,
+    camera,
+  } = useThree();
   const perspectiveCamera = Camera.getCamera(
     camera,
     canvas.width,

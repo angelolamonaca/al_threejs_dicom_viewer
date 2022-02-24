@@ -13,7 +13,8 @@ class Camera {
 
   // eslint-disable-next-line max-len
   // eslint-disable-next-line no-useless-constructor,@typescript-eslint/no-empty-function
-  private constructor() {}
+  private constructor() {
+  }
 
   public static getCamera(
     camera?: THREE.Camera,
