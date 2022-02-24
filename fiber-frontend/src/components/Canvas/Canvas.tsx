@@ -8,8 +8,8 @@
 import { Vector3 } from 'three';
 import React from 'react';
 import { Canvas as FiberCanvas } from '@react-three/fiber';
-import CameraElement from './ThreeObjects/Camera/CameraElement';
-import PanelElement from './ThreeObjects/Panel/PanelElement';
+import CanvasCamera from './CanvasCamera';
+import CanvasPanel from './CanvasPanel';
 
 const Canvas = (props: any): JSX.Element => {
   const { contrastToApply } = props;
@@ -25,10 +25,10 @@ const Canvas = (props: any): JSX.Element => {
         backgroundColor: '#abccff',
       }}
     >
-      <CameraElement position={new Vector3(0, 0, 5)} />
+      <CanvasCamera position={new Vector3(0, 0, 5)} />
       <ambientLight />
       <pointLight position={[10, 10, 10]} />
-      <PanelElement
+      <CanvasPanel
         position={new Vector3(0, 0, 0)}
         size={new Vector3(4, 4, 0.1)}
         contrastToApply={contrastToApply | 0}

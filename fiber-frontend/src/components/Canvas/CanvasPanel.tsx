@@ -1,10 +1,10 @@
 import * as THREE from 'three';
 import React, { useEffect, useState } from 'react';
 import { ThreeEvent } from '@react-three/fiber';
-import { JsonDcm } from '../../../models/JsonDcm';
-import { getImageFromDicomConverterApi } from '../../../services/imageService';
-import { panelScrollHandler } from './PanelEvents';
-import Panel from './Panel';
+import { JsonDcm } from '../../models/JsonDcm';
+import { getImageFromDicomConverterApi } from '../../services/imageService';
+import { panelScrollHandler } from '../../utils/mouse/PanelEvents';
+import Panel from '../../models/Panel';
 
 /**
  * @created 14/02/2022 - 17:01
@@ -13,7 +13,7 @@ import Panel from './Panel';
  * @date 14/02/2022
  */
 
-const PanelElement = (
+const CanvasPanel = (
   props: any,
 ): JSX.Element => {
   const {
@@ -23,7 +23,7 @@ const PanelElement = (
   const [imgId, setImgId] = useState('000');
   const [jsonDcm, setJsonDcm] = useState(new JsonDcm());
   const { contrastApplied } = props;
-  console.log('Line 27 in PanelElement.tsx', contrastApplied);
+  console.log('Line 27 in CanvasPanel.tsx', contrastApplied);
 
   useEffect(() => {
     getImageFromDicomConverterApi(imgId, true)
@@ -64,4 +64,4 @@ const PanelElement = (
   );
 };
 
-export default PanelElement;
+export default CanvasPanel;

@@ -1,5 +1,5 @@
 import { DataTexture } from 'three';
-import { PixelData } from '../../../../models/PixelData';
+import { PixelData } from './PixelData';
 
 /**
  * @project al_threejs_dicom_viewer

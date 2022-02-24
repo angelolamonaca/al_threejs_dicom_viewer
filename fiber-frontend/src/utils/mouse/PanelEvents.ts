@@ -1,9 +1,6 @@
 import { ThreeEvent } from '@react-three/fiber';
-import {
-  detectWheelDirection,
-  mouseWheelDirection,
-} from '../../../utils/mouse';
-import { zeroPad } from '../../../utils/math';
+import { detectWheelDirection, mouseWheelDirection } from './index';
+import { zeroPad } from '../math';
 
 /**
  * @created 14/02/2022 - 17:06
@@ -12,6 +9,7 @@ import { zeroPad } from '../../../utils/math';
  * @date 14/02/2022
  */
 
+// TODO Abstract it
 export const panelScrollHandler = (
   event: ThreeEvent<WheelEvent> | WheelEvent,
   imgId: string,
