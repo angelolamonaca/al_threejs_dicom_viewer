@@ -7,20 +7,14 @@
 
 import * as React from 'react';
 import BottomNavigation from '@mui/material/BottomNavigation';
-import BottomNavigationAction from '@mui/material/BottomNavigationAction';
-import FolderIcon from '@mui/icons-material/Folder';
-import HomeIcon from '@mui/icons-material/Home';
-import DiamondIcon from '@mui/icons-material/Diamond';
+import { BottomNavigationAction, Button } from '@mui/material';
+import VisibilityIcon from '@mui/icons-material/Visibility';
+import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
 
 const BottomNavigationBar = (): JSX.Element => {
-  const [value, setValue] = React.useState('recents');
-
-  const handleChange = (
-    event: React.SyntheticEvent,
-    newValue: string,
-  ): void => {
-    setValue(newValue);
-  };
+  const [airVisible, setAirVisible] = React.useState(true);
+  const [fatVisible, setFatVisible] = React.useState(true);
+  const [boneVisible, setBoneVisible] = React.useState(true);
 
   return (
     <BottomNavigation
@@ -28,19 +22,42 @@ const BottomNavigationBar = (): JSX.Element => {
         minHeight: '56px',
         height: '10vh',
       }}
-      value={value}
-      onChange={handleChange}
     >
       <BottomNavigationAction
-        label="Explore"
-        value="explore"
-        icon={<FolderIcon />}
+        icon={(
+          <Button
+            variant="outlined"
+            onClick={() => {
+              setAirVisible(!airVisible);
+            }}
+            startIcon={airVisible ? <VisibilityIcon /> : <VisibilityOffIcon />}>
+            Air
+          </Button>
+        )}
       />
-      <BottomNavigationAction label="Home" value="home" icon={<HomeIcon />} />
       <BottomNavigationAction
-        label="Premium"
-        value="premium"
-        icon={<DiamondIcon />}
+        icon={(
+          <Button
+            variant="outlined"
+            onClick={() => {
+              setFatVisible(!fatVisible);
+            }}
+            startIcon={fatVisible ? <VisibilityIcon /> : <VisibilityOffIcon />}>
+            Fat
+          </Button>
+        )}
+      />
+      <BottomNavigationAction
+        icon={(
+          <Button
+            variant="outlined"
+            onClick={() => {
+              setBoneVisible(!boneVisible);
+            }}
+            startIcon={boneVisible ? <VisibilityIcon /> : <VisibilityOffIcon />}>
+            Bone
+          </Button>
+        )}
       />
     </BottomNavigation>
   );

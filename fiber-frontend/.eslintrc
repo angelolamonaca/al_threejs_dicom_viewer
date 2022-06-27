@@ -23,6 +23,7 @@
     "react-hooks"
   ],
   "rules": {
+    "linebreak-style": ["error", "windows"],
     "no-plusplus": "off",
     "no-bitwise": "off",
     "prefer-destructuring": "off",
@@ -30,6 +31,7 @@
     "operator-linebreak": "off",
     "import/no-unresolved": "error",
     "no-use-before-define": "error",
+    "react/jsx-closing-bracket-location": "off",
     "react/jsx-filename-extension": [
       "warn",
       {
