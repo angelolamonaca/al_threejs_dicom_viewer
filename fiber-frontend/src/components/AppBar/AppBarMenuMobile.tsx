@@ -2,7 +2,7 @@ import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 import IconButton from '@mui/material/IconButton';
 import ZoomInIcon from '@mui/icons-material/ZoomIn';
-import ContrastIcon from '@mui/icons-material/Contrast';
+import TuneIcon from '@mui/icons-material/Tune';
 import * as React from 'react';
 import { Scope } from '../../enums/Scope';
 
@@ -50,11 +50,11 @@ const AppBarMenuMobile = (props: any): JSX.Element => {
       <MenuItem>
         <IconButton
           size="large"
-          aria-label="Increase Contrast"
+          aria-label="Increase Scale"
           color="inherit"
-          onClick={() => setScopeOnParent(Scope.CONTRAST)}
+          onClick={() => setScopeOnParent(Scope.WINDOW)}
         >
-          <ContrastIcon />
+          <TuneIcon />
         </IconButton>
       </MenuItem>
     </Menu>

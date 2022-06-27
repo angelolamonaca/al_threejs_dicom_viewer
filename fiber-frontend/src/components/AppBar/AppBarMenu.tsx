@@ -1,6 +1,6 @@
 import IconButton from '@mui/material/IconButton';
 import ZoomInIcon from '@mui/icons-material/ZoomIn';
-import ContrastIcon from '@mui/icons-material/Contrast';
+import TuneIcon from '@mui/icons-material/Tune';
 import * as React from 'react';
 import Toolbar from '@mui/material/Toolbar';
 import MenuIcon from '@mui/icons-material/Menu';
@@ -27,6 +27,7 @@ const AppBarMenu = (props: any): JSX.Element => {
     <AppBar position="static">
       <Toolbar>
         <IconButton
+          disabled
           size="large"
           edge="start"
           color="inherit"
@@ -67,11 +68,11 @@ const AppBarMenu = (props: any): JSX.Element => {
           </IconButton>
           <IconButton
             size="large"
-            aria-label="Increase Contrast"
+            aria-label="Increase Scale"
             color="inherit"
-            onClick={() => setScopeOnParent(Scope.CONTRAST)}
+            onClick={() => setScopeOnParent(Scope.WINDOW)}
           >
-            <ContrastIcon />
+            <TuneIcon />
           </IconButton>
         </Box>
         <Box

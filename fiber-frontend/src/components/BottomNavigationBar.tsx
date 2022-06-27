@@ -12,11 +12,13 @@ import VisibilityIcon from '@mui/icons-material/Visibility';
 import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
 import { useAppDispatch, useAppSelector } from '../redux/hooks';
 import {
-  setAirVisible, setBoneVisible,
-  setFatVisible,
+  setAirVisible,
+  setBoneVisible,
+  setTissuesVisible,
+  setWaterVisible,
 } from '../redux/features/visibility/visibilityHandler';
 
-const BottomNavigationBar = (): JSX.Element => {
+const BottomNavigationBar = ({ device = 'desktop' }): JSX.Element => {
   const visibility = useAppSelector((state) => state.visibility);
   const dispatch = useAppDispatch();
 
@@ -30,11 +32,13 @@ const BottomNavigationBar = (): JSX.Element => {
       <BottomNavigationAction
         icon={(
           <Button
+            size={device === 'mobile' ? 'small' : 'large'}
             variant="outlined"
             onClick={() => {
               dispatch(setAirVisible());
             }}
-            startIcon={visibility.airVisible ? <VisibilityIcon /> : <VisibilityOffIcon />}>
+            startIcon={visibility.airVisible ? <VisibilityIcon /> :
+            <VisibilityOffIcon />}>
             Air
           </Button>
         )}
@@ -42,18 +46,35 @@ const BottomNavigationBar = (): JSX.Element => {
       <BottomNavigationAction
         icon={(
           <Button
+            size={device === 'mobile' ? 'small' : 'large'}
             variant="outlined"
             onClick={() => {
-              dispatch(setFatVisible());
+              dispatch(setWaterVisible());
             }}
-            startIcon={visibility.fatVisible ? <VisibilityIcon /> : <VisibilityOffIcon />}>
-            Fat
+            startIcon={visibility.waterVisible ? <VisibilityIcon /> :
+            <VisibilityOffIcon />}>
+            Water
           </Button>
         )}
       />
       <BottomNavigationAction
         icon={(
           <Button
+            size={device === 'mobile' ? 'small' : 'large'}
+            variant="outlined"
+            onClick={() => {
+              dispatch(setTissuesVisible());
+            }}
+            startIcon={visibility.tissuesVisible ? <VisibilityIcon /> :
+            <VisibilityOffIcon />}>
+            Tissues
+          </Button>
+        )}
+      />
+      <BottomNavigationAction
+        icon={(
+          <Button
+            size={device === 'mobile' ? 'small' : 'large'}
             variant="outlined"
             onClick={() => {
               dispatch(setBoneVisible());

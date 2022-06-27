@@ -13,7 +13,7 @@ const ToolBoxInput = (props: any): JSX.Element => {
   const {
     scope,
     zoomValue,
-    contrastValue,
+    scaleValue,
     handleInputChange,
   } = props;
 
@@ -29,10 +29,11 @@ const ToolBoxInput = (props: any): JSX.Element => {
           ? typeof zoomValue === 'number'
             ? zoomValue : 1
           // eslint-disable-next-line no-nested-ternary
-          : scope === Scope.CONTRAST
-            ? typeof contrastValue === 'number'
-              ? contrastValue : 0
-            : 1
+          : scope === Scope.MIN_SCALE
+            ? scaleValue[0]
+            : scope === Scope.WINDOW
+              ? scaleValue[1]
+              : 1
       }
       onChange={handleInputChange}
       inputProps={
@@ -45,10 +46,10 @@ const ToolBoxInput = (props: any): JSX.Element => {
             type: 'number',
             'aria-labelledby': 'input-slider',
           }
-          : scope === Scope.CONTRAST ? {
-            step: 0.01,
-            min: -255,
-            max: 255,
+          : scope === Scope.WINDOW ? {
+            step: 1,
+            min: 0,
+            max: 3570,
             type: 'number',
             'aria-labelledby': 'input-slider',
           }

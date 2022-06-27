@@ -7,5 +7,6 @@
 
 export enum Scope {
   ZOOM,
-  CONTRAST,
+  MIN_SCALE,
+  WINDOW,
 }

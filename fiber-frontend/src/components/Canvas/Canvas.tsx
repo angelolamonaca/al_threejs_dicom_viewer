@@ -14,7 +14,7 @@ import CanvasPanel from './CanvasPanel';
 import { store } from '../../redux/store';
 
 const Canvas = (props: any): JSX.Element => {
-  const { contrastToApply } = props;
+  const { scaleToApply } = props;
 
   return (
     <FiberCanvas
@@ -24,7 +24,7 @@ const Canvas = (props: any): JSX.Element => {
         minHeight: '200px',
         height: 'calc(70vh - 16px)',
         minWidth: '200px',
-        backgroundColor: '#d4dae1',
+        backgroundColor: '#8a9dc3',
       }}
     >
       <CanvasCamera position={new Vector3(0, 0, 5)} />
@@ -35,7 +35,7 @@ const Canvas = (props: any): JSX.Element => {
         <CanvasPanel
           position={new Vector3(0, 0, 0)}
           size={new Vector3(4, 4, 0.1)}
-          contrastToApply={contrastToApply | 0}
+          scaleToApply={scaleToApply | 0}
         />
       </Provider>
     </FiberCanvas>

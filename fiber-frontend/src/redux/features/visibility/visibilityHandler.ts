@@ -9,16 +9,18 @@ import type { RootState } from '../../store';
  */
 
 // Define a type for the slice state
-interface VisibilityState {
+export interface VisibilityState {
   airVisible: boolean,
-  fatVisible: boolean,
+  waterVisible: boolean,
+  tissuesVisible: boolean,
   boneVisible: boolean,
 }
 
 // Define the initial state using that type
 const initialState: VisibilityState = {
   airVisible: true,
-  fatVisible: true,
+  waterVisible: true,
+  tissuesVisible: true,
   boneVisible: true,
 };
 
@@ -30,8 +32,11 @@ export const visibilityHandler = createSlice({
     setAirVisible: (state) => {
       state.airVisible = !state.airVisible;
     },
-    setFatVisible: (state) => {
-      state.fatVisible = !state.fatVisible;
+    setWaterVisible: (state) => {
+      state.waterVisible = !state.waterVisible;
+    },
+    setTissuesVisible: (state) => {
+      state.tissuesVisible = !state.tissuesVisible;
     },
     setBoneVisible: (state) => {
       state.boneVisible = !state.boneVisible;
@@ -41,7 +46,8 @@ export const visibilityHandler = createSlice({
 
 export const {
   setAirVisible,
-  setFatVisible,
+  setWaterVisible,
+  setTissuesVisible,
   setBoneVisible,
 } = visibilityHandler.actions;
 

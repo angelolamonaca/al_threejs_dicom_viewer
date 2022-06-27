@@ -8,9 +8,9 @@ import { PixelData } from './PixelData';
  */
 
 export class Texture {
-  static contrastToApply = 0;
+  static scaleToApply = [0, 3570];
 
   static getDataTexture(pixelData: PixelData): DataTexture {
-    return PixelData.toTexture(pixelData, this.contrastToApply);
+    return PixelData.toTexture(pixelData, this.scaleToApply);
   }
 }

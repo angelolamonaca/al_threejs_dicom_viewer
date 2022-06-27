@@ -24,7 +24,7 @@ const CanvasPanel = (
   } = props;
   const [imgId, setImgId] = useState('000');
   const [jsonDcm, setJsonDcm] = useState(new JsonDcm());
-  const { contrastApplied } = props;
+  const { scaleApplied } = props;
 
   useEffect(() => {
     getImageFromDicomConverterApi(imgId, true)

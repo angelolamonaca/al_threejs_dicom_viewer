@@ -12,7 +12,7 @@ const ToolBoxSlider = (props: any): JSX.Element => {
   const {
     scope,
     zoomValue,
-    contrastValue,
+    scaleValue,
     handleSliderChange,
   } = props;
   return (
@@ -21,17 +21,17 @@ const ToolBoxSlider = (props: any): JSX.Element => {
         // eslint-disable-next-line no-nested-ternary
         scope === Scope.ZOOM
           ? 0
-          : scope === Scope.CONTRAST ? -255
+          : scope === Scope.WINDOW ? 0
             : 0
       }
       max={
         // eslint-disable-next-line no-nested-ternary
         scope === Scope.ZOOM
           ? 10
-          : scope === Scope.CONTRAST ? 255
+          : scope === Scope.WINDOW ? 3570
             : 10
       }
-      step={0.01}
+      step={scope === Scope.WINDOW ? 1 : 0.01}
       value={
         // eslint-disable-next-line no-nested-ternary
         scope === Scope.ZOOM
@@ -39,9 +39,8 @@ const ToolBoxSlider = (props: any): JSX.Element => {
             ? zoomValue
             : 1
           // eslint-disable-next-line no-nested-ternary
-          : scope === Scope.CONTRAST ? typeof contrastValue === 'number'
-            ? contrastValue
-            : 0
+          : scope === Scope.WINDOW
+            ? scaleValue
             : 1
       }
       onChange={handleSliderChange}

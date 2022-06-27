@@ -27,7 +27,7 @@ const ScopeIcon = (scope: Scope, state: Status): JSX.Element => {
     case Scope.ZOOM: {
       return state === Status.DECREASE ? <ZoomOutIcon /> : <ZoomInIcon />;
     }
-    case Scope.CONTRAST: {
+    case Scope.WINDOW: {
       return state === Status.DECREASE ? <RemoveIcon /> : <AddIcon />;
     }
     default:
@@ -40,12 +40,12 @@ const ToolBox = (props: any): JSX.Element => {
   const { scope } = props;
   const [zoomValue, setZoomValue] =
     React.useState<number | string | Array<number | string>>(1);
-  const [contrastValue, setContrastValue] =
-    React.useState<number | string | Array<number | string>>(0);
+  const [scaleValue, setScaleValue] =
+    React.useState<number | string | Array<number | string>>([0, 3570]);
 
-  const setContrastOnParent = (contrast: number): void => {
-    const { contrastToApply } = props;
-    contrastToApply(contrast);
+  const setScaleOnParent = (scale: number): void => {
+    const { scaleToApply } = props;
+    scaleToApply(scale);
   };
 
   const handleSliderChange = (
@@ -57,8 +57,8 @@ const ToolBox = (props: any): JSX.Element => {
         setZoomValue(newValue);
         break;
       }
-      case Scope.CONTRAST: {
-        setContrastValue(newValue);
+      case Scope.WINDOW: {
+        setScaleValue(newValue);
         break;
       }
       default:
@@ -76,8 +76,8 @@ const ToolBox = (props: any): JSX.Element => {
         );
         break;
       }
-      case Scope.CONTRAST: {
-        setContrastValue(
+      case Scope.WINDOW: {
+        setScaleValue(
           event.target.value === '' ? '' : Number(event.target.value),
         );
         break;
@@ -95,15 +95,15 @@ const ToolBox = (props: any): JSX.Element => {
         }
         break;
       }
-      case Scope.CONTRAST: {
-        Texture.contrastToApply = contrastValue as number;
-        setContrastOnParent(contrastValue as number);
+      case Scope.WINDOW: {
+        Texture.scaleToApply = scaleValue as Array<number>;
+        setScaleOnParent(scaleValue as number);
         break;
       }
       default:
         break;
     }
-  }, [scope, zoomValue, contrastValue]);
+  }, [scope, zoomValue, scaleValue]);
 
   return (
     <Box
@@ -131,12 +131,22 @@ const ToolBox = (props: any): JSX.Element => {
         }}
       >
         <Grid container spacing={2} alignItems="center">
+          {scope === Scope.WINDOW && (
+          <Grid item>
+            <ToolBoxInput
+              scope={Scope.MIN_SCALE}
+              zoomValue={zoomValue}
+              scaleValue={scaleValue}
+              handleInputChange={handleInputChange}
+            />
+          </Grid>
+          )}
           <Grid item>{ScopeIcon(scope, Status.DECREASE)}</Grid>
           <Grid item xs>
             <ToolBoxSlider
               scope={scope}
               zoomValue={zoomValue}
-              contrastValue={contrastValue}
+              scaleValue={scaleValue}
               handleSliderChange={handleSliderChange}
             />
           </Grid>
@@ -145,7 +155,7 @@ const ToolBox = (props: any): JSX.Element => {
             <ToolBoxInput
               scope={scope}
               zoomValue={zoomValue}
-              contrastValue={contrastValue}
+              scaleValue={scaleValue}
               handleInputChange={handleInputChange}
             />
           </Grid>
