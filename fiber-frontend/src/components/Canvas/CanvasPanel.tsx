@@ -23,7 +23,6 @@ const CanvasPanel = (
   const [imgId, setImgId] = useState('000');
   const [jsonDcm, setJsonDcm] = useState(new JsonDcm());
   const { contrastApplied } = props;
-  console.log('Line 27 in CanvasPanel.tsx', contrastApplied);
 
   useEffect(() => {
     getImageFromDicomConverterApi(imgId, true)

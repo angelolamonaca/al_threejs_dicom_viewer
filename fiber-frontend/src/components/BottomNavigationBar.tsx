@@ -11,14 +11,13 @@ import { BottomNavigationAction, Button } from '@mui/material';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
 import { useAppDispatch, useAppSelector } from '../redux/hooks';
-import { increment } from '../redux/features/counter/counterSlice';
+import {
+  setAirVisible, setBoneVisible,
+  setFatVisible,
+} from '../redux/features/visibility/visibilityHandler';
 
 const BottomNavigationBar = (): JSX.Element => {
-  const [airVisible, setAirVisible] = React.useState(true);
-  const [fatVisible, setFatVisible] = React.useState(true);
-  const [boneVisible, setBoneVisible] = React.useState(true);
-
-  const count = useAppSelector((state) => state.counter.value);
+  const visibility = useAppSelector((state) => state.airVisible);
   const dispatch = useAppDispatch();
 
   return (
@@ -33,9 +32,9 @@ const BottomNavigationBar = (): JSX.Element => {
           <Button
             variant="outlined"
             onClick={() => {
-              dispatch(increment());
+              dispatch(setAirVisible());
             }}
-            startIcon={airVisible ? <VisibilityIcon /> : <VisibilityOffIcon />}>
+            startIcon={visibility.airVisible ? <VisibilityIcon /> : <VisibilityOffIcon />}>
             Air
           </Button>
         )}
@@ -45,9 +44,9 @@ const BottomNavigationBar = (): JSX.Element => {
           <Button
             variant="outlined"
             onClick={() => {
-              setFatVisible(!fatVisible);
+              dispatch(setFatVisible());
             }}
-            startIcon={fatVisible ? <VisibilityIcon /> : <VisibilityOffIcon />}>
+            startIcon={visibility.fatVisible ? <VisibilityIcon /> : <VisibilityOffIcon />}>
             Fat
           </Button>
         )}
@@ -57,9 +56,9 @@ const BottomNavigationBar = (): JSX.Element => {
           <Button
             variant="outlined"
             onClick={() => {
-              setBoneVisible(!boneVisible);
+              dispatch(setBoneVisible());
             }}
-            startIcon={boneVisible ? <VisibilityIcon /> :
+            startIcon={visibility.boneVisible ? <VisibilityIcon /> :
             <VisibilityOffIcon />}>
             Bone
           </Button>

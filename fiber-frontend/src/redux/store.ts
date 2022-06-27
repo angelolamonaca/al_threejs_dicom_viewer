@@ -1,9 +1,11 @@
 import { configureStore } from '@reduxjs/toolkit';
-import { counterSlice } from './features/counter/counterSlice';
+import { visibilityHandler } from './features/visibility/visibilityHandler';
 
 export const store = configureStore({
   reducer: {
-    counter: counterSlice.reducer,
+    airVisible: visibilityHandler.reducer,
+    fatVisible: visibilityHandler.reducer,
+    boneVisible: visibilityHandler.reducer,
   },
 });
 
