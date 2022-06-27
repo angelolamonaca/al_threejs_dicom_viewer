@@ -1,11 +1,16 @@
 import { configureStore } from '@reduxjs/toolkit';
 import { visibilityHandler } from './features/visibility/visibilityHandler';
 
+/**
+ * @created 15/04/2022 - 10:12
+ * @project al_threejs_dicom_viewer
+ * @author Angelo Lamonaca - https://github.com/angelolamonaca
+ * @date 15/04/2022
+ */
+
 export const store = configureStore({
   reducer: {
-    airVisible: visibilityHandler.reducer,
-    fatVisible: visibilityHandler.reducer,
-    boneVisible: visibilityHandler.reducer,
+    visibility: visibilityHandler.reducer,
   },
 });
 

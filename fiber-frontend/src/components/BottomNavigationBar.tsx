@@ -17,7 +17,7 @@ import {
 } from '../redux/features/visibility/visibilityHandler';
 
 const BottomNavigationBar = (): JSX.Element => {
-  const visibility = useAppSelector((state) => state.airVisible);
+  const visibility = useAppSelector((state) => state.visibility);
   const dispatch = useAppDispatch();
 
   return (

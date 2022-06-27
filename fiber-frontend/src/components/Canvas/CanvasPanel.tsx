@@ -5,6 +5,7 @@ import { JsonDcm } from '../../models/JsonDcm';
 import { getImageFromDicomConverterApi } from '../../services/imageService';
 import { panelScrollHandler } from '../../utils/mouse/PanelEvents';
 import Panel from '../../models/Panel';
+import { useAppSelector } from '../../redux/hooks';
 
 /**
  * @created 14/02/2022 - 17:01
@@ -16,6 +17,7 @@ import Panel from '../../models/Panel';
 const CanvasPanel = (
   props: any,
 ): JSX.Element => {
+  const visibility = useAppSelector((state) => state.visibility);
   const {
     position,
     size,

@@ -1,6 +1,13 @@
 import { createSlice } from '@reduxjs/toolkit';
 import type { RootState } from '../../store';
 
+/**
+ * @created 27/04/2022 - 18:15
+ * @project al_threejs_dicom_viewer
+ * @author Angelo Lamonaca - https://github.com/angelolamonaca
+ * @date 27/04/2022
+ */
+
 // Define a type for the slice state
 interface VisibilityState {
   airVisible: boolean,

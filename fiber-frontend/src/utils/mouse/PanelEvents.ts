@@ -9,7 +9,6 @@ import { zeroPad } from '../math';
  * @date 14/02/2022
  */
 
-// TODO Abstract it
 export const panelScrollHandler = (
   event: ThreeEvent<WheelEvent> | WheelEvent,
   imgId: string,
