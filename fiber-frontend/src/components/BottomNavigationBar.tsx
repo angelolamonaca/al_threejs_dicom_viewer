@@ -10,11 +10,16 @@ import BottomNavigation from '@mui/material/BottomNavigation';
 import { BottomNavigationAction, Button } from '@mui/material';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
+import { useAppDispatch, useAppSelector } from '../redux/hooks';
+import { increment } from '../redux/features/counter/counterSlice';
 
 const BottomNavigationBar = (): JSX.Element => {
   const [airVisible, setAirVisible] = React.useState(true);
   const [fatVisible, setFatVisible] = React.useState(true);
   const [boneVisible, setBoneVisible] = React.useState(true);
+
+  const count = useAppSelector((state) => state.counter.value);
+  const dispatch = useAppDispatch();
 
   return (
     <BottomNavigation
@@ -28,7 +33,7 @@ const BottomNavigationBar = (): JSX.Element => {
           <Button
             variant="outlined"
             onClick={() => {
-              setAirVisible(!airVisible);
+              dispatch(increment());
             }}
             startIcon={airVisible ? <VisibilityIcon /> : <VisibilityOffIcon />}>
             Air
@@ -54,7 +59,8 @@ const BottomNavigationBar = (): JSX.Element => {
             onClick={() => {
               setBoneVisible(!boneVisible);
             }}
-            startIcon={boneVisible ? <VisibilityIcon /> : <VisibilityOffIcon />}>
+            startIcon={boneVisible ? <VisibilityIcon /> :
+            <VisibilityOffIcon />}>
             Bone
           </Button>
         )}

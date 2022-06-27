@@ -23,7 +23,10 @@
     "react-hooks"
   ],
   "rules": {
-    "linebreak-style": ["error", "windows"],
+    "linebreak-style": [
+      "error",
+      "windows"
+    ],
     "no-plusplus": "off",
     "no-bitwise": "off",
     "prefer-destructuring": "off",
@@ -61,9 +64,12 @@
     "max-len": [
       "warn",
       {
-        "code": 80
+        "code": 120
       }
     ],
+    "no-param-reassign": "off",
+    "@typescript-eslint/no-unused-vars": "off",
+    "@typescript-eslint/no-explicit-any": "off",
     "implicit-arrow-linebreak": "off",
     "no-console": "off",
     "react/jsx-curly-newline": "off",
