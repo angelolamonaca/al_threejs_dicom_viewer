@@ -1,9 +1,7 @@
-from io import BytesIO, SEEK_SET
-
 from fastapi import FastAPI
 from fastapi.staticfiles import StaticFiles
 from starlette.middleware.cors import CORSMiddleware
-from starlette.responses import StreamingResponse, JSONResponse
+from starlette.responses import JSONResponse
 
 from converter.converter import convert_dicom
 
@@ -24,12 +22,10 @@ app.add_middleware(
 
 
 @app.get("/{case_id}/{img_id}")
-async def get_image(case_id, img_id, output_type="json", with_metadata=False):
-    converted_dicom = convert_dicom(case_id, img_id, output_type, with_metadata)
-    if output_type == "json":
-        return JSONResponse(content=converted_dicom)
-    else:
-        filtered_image = BytesIO()
-        converted_dicom.save(filtered_image, output_type)
-        filtered_image.seek(SEEK_SET)
-        return StreamingResponse(filtered_image)
+async def get_image(case_id, img_id, with_metadata=False):
+    converted_dicom = convert_dicom(case_id, img_id, with_metadata)
+    return JSONResponse(content=converted_dicom)
+
+
+
+

@@ -1,20 +1,8 @@
 import * as THREE from 'three';
 import { PerspectiveCamera, Vector3 } from 'three';
 
-/**
- * @created 18/02/2022 - 09:42
- * @project al_threejs_dicom_viewer
- * @author Angelo Lamonaca - https://github.com/angelolamonaca
- * @date 18/02/2022
- */
-
 class Camera {
   static perspectiveCamera: THREE.PerspectiveCamera;
-
-  // eslint-disable-next-line max-len
-  // eslint-disable-next-line no-useless-constructor,@typescript-eslint/no-empty-function
-  private constructor() {
-  }
 
   public static getCamera(
     camera?: THREE.Camera,

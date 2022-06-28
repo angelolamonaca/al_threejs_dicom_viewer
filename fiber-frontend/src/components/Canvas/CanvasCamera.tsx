@@ -4,13 +4,6 @@ import { useThree } from '@react-three/fiber';
 import React from 'react';
 import Camera from '../../models/Camera';
 
-/**
- * @created 14/02/2022 - 16:58
- * @project al_threejs_dicom_viewer
- * @author Angelo Lamonaca - https://github.com/angelolamonaca
- * @date 14/02/2022
- */
-
 const CanvasCamera = ({ position }: { position: Vector3 }): JSX.Element => {
   const divCanvas = document.getElementById('divCanvas');
   const canvas = divCanvas?.children[0] as HTMLCanvasElement;

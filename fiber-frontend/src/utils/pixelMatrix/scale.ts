@@ -81,6 +81,7 @@ export default (
         return 0;
     }
   }
-  // eslint-disable-next-line no-mixed-operators,max-len
-  return (value - originalRange[0]) * (finalRange[1] - finalRange[0]) / (originalRange[1] - originalRange[0]) + finalRange[0];
+  return (value - originalRange[0]) * (finalRange[1] - finalRange[0])
+      / (originalRange[1] - originalRange[0])
+      + finalRange[0];
 };

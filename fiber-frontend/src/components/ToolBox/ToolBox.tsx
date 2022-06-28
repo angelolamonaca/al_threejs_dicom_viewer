@@ -1,10 +1,3 @@
-/**
- * @created 16/02/2022 - 09:37
- * @project al_threejs_dicom_viewer
- * @author Angelo Lamonaca
- * @date 16/02/2022
- */
-
 import * as React from 'react';
 import { useEffect } from 'react';
 import Box from '@mui/material/Box';

@@ -2,13 +2,6 @@ import { ThreeEvent } from '@react-three/fiber';
 import { detectWheelDirection, mouseWheelDirection } from './index';
 import { zeroPad } from '../math';
 
-/**
- * @created 14/02/2022 - 17:06
- * @project al_threejs_dicom_viewer
- * @author Angelo Lamonaca - https://github.com/angelolamonaca
- * @date 14/02/2022
- */
-
 export const panelScrollHandler = (
   event: ThreeEvent<WheelEvent> | WheelEvent,
   imgId: string,

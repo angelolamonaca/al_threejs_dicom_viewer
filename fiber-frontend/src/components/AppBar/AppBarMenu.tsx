@@ -10,12 +10,6 @@ import DesignServicesIcon from '@mui/icons-material/DesignServices';
 import AppBar from '@mui/material/AppBar';
 import { Scope } from '../../enums/Scope';
 
-/**
- * @project al_threejs_dicom_viewer
- * @created 24/02/2022 - 09:50
- * @author Angelo Lamonaca - https://github.com/angelolamonaca
- */
-
 const AppBarMenu = (props: any): JSX.Element => {
   const {
     mobileMenuId,

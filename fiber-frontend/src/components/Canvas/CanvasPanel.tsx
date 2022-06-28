@@ -7,24 +7,16 @@ import { panelScrollHandler } from '../../utils/mouse/PanelEvents';
 import Panel from '../../models/Panel';
 import { useAppSelector } from '../../redux/hooks';
 
-/**
- * @created 14/02/2022 - 17:01
- * @project al_threejs_dicom_viewer
- * @author Angelo Lamonaca
- * @date 14/02/2022
- */
-
 const CanvasPanel = (
   props: any,
 ): JSX.Element => {
-  const visibility = useAppSelector((state) => state.visibility);
+  useAppSelector((state) => state.visibility);
   const {
     position,
     size,
   } = props;
   const [imgId, setImgId] = useState('000');
   const [jsonDcm, setJsonDcm] = useState(new JsonDcm());
-  const { scaleApplied } = props;
 
   useEffect(() => {
     getImageFromDicomConverterApi(imgId, true)

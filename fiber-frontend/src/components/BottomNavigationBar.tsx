@@ -1,10 +1,3 @@
-/**
- * @created 16/02/2022 - 11:13
- * @project al_threejs_dicom_viewer
- * @author Angelo Lamonaca
- * @date 16/02/2022
- */
-
 import * as React from 'react';
 import BottomNavigation from '@mui/material/BottomNavigation';
 import { BottomNavigationAction, Button } from '@mui/material';

@@ -1,10 +1,3 @@
-/**
- * @created 14/02/2022 - 12:12
- * @project al_threejs_dicom_viewer
- * @author Angelo Lamonaca - https://github.com/angelolamonaca
- * @date 14/02/2022
- */
-
 import * as React from 'react';
 import Box from '@mui/material/Box';
 import { Scope } from '../../enums/Scope';

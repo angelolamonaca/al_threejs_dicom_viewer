@@ -6,12 +6,6 @@ import TuneIcon from '@mui/icons-material/Tune';
 import * as React from 'react';
 import { Scope } from '../../enums/Scope';
 
-/**
- * @project al_threejs_dicom_viewer
- * @created 24/02/2022 - 09:50
- * @author Angelo Lamonaca - https://github.com/angelolamonaca
- */
-
 const AppBarMenuMobile = (props: any): JSX.Element => {
   const {
     mobileMenuId,
