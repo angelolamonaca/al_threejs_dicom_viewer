@@ -9,13 +9,14 @@ def convert_dicom(case_id, img_id, with_metadata=False):
 
     dicom_hu = ds.pixel_array * ds.RescaleSlope + ds.RescaleIntercept
 
-    pixel_data_uint8_scaled: ndarray = np.uint32(dicom_hu)
+    pixel_data_uint32_scaled: ndarray = np.uint32(dicom_hu)
 
     output_json = {
-        "pixelData": pixel_data_uint8_scaled.tolist()
+        "pixelData": pixel_data_uint32_scaled.tolist()
     }
 
     if with_metadata:
         output_json["metadata"] = ds.to_json_dict()
 
     return output_json
+
